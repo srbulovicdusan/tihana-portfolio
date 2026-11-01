@@ -1,0 +1,223 @@
+.about {
+  position: relative;
+  background: #060606;
+  color: #f4f2ee;
+  overflow: hidden;
+}
+
+/* ── Wide ───────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.portraitBox,
+.text {
+  display: contents;
+}
+
+.portrait {
+  position: absolute;
+  top: 0;
+  left: calc(50vw - 87.7vh);
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 70%, transparent 100%), linear-gradient(to top, transparent 0%, #000 30%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 70%, transparent 100%), linear-gradient(to top, transparent 0%, #000 30%);
+  mask-composite: intersect;
+}
+
+.title {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(40px, min(11.44vw, calc((46vw - 22.7vh) / 3.5), calc((46vw - 37vh) / 2.75)), 189px);
+  line-height: .9;
+  letter-spacing: -.05em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.groupA {
+  position: absolute;
+  left: 4%;
+  top: clamp(80px, 11vh, 120px);
+  display: block;
+}
+
+.groupB {
+  position: absolute;
+  right: 4%;
+  bottom: calc(clamp(24px, 4vh, 40px) + 200px - .17em);
+  display: block;
+}
+
+.title .lineAbout {
+  padding-right: calc(100px + .14em);
+  text-align: right;
+}
+
+.title .lineMe {
+  text-align: right;
+}
+
+.intro {
+  position: absolute;
+  left: 4%;
+  top: calc(100% - clamp(24px, 4vh, 40px) - 200px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Deviation from the export: its formula (46vw - 36vh) goes negative on
+     portrait tablets, collapsing the text to one word per line over the
+     bottom bar. The 180px floor only applies where that would happen. */
+  max-width: min(360px, max(calc(46vw - 36vh), 180px));
+}
+
+.introLabel {
+  color: rgba(244, 242, 238, .55);
+}
+
+.introText {
+  margin: 0;
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.ln {
+  display: inline;
+  white-space: normal;
+}
+
+.bar {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: clamp(24px, 4vh, 40px);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: #92938f;
+}
+
+.expLink {
+  color: #f4f2ee;
+  transition: opacity .3s;
+}
+
+.expLink:hover {
+  opacity: .6;
+}
+
+@media (min-width: 1100px) {
+  .intro {
+    max-width: none;
+  }
+
+  .ln {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+/* ── Compact ────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .hero {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 64px 0 56px;
+  }
+
+  .portraitBox {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+  }
+
+  .portrait {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 49% 30%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to top, transparent 0%, #000 30%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to top, transparent 0%, #000 30%);
+    mask-composite: intersect;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding: 0 6%;
+    margin-top: 8px;
+  }
+
+  .title {
+    position: static;
+    font-size: clamp(40px, 13vw, 80px);
+    pointer-events: auto;
+  }
+
+  .groupA,
+  .groupB {
+    position: static;
+  }
+
+  .spacer {
+    display: none;
+  }
+
+  .title .lineMore,
+  .title .lineAbout {
+    padding-left: 25%;
+  }
+
+  .title .lineAbout {
+    padding-right: .14em;
+    text-align: left;
+  }
+
+  .title .lineMe {
+    padding-left: 50%;
+    text-align: left;
+  }
+
+  .intro {
+    position: static;
+    max-width: 360px;
+  }
+
+  /* The compact intro is not scroll-revealed in the design */
+  :global(.js) .intro[data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .introText {
+    text-wrap: pretty;
+  }
+
+  .bar {
+    position: static;
+    flex-direction: column;
+    justify-content: normal;
+    align-items: normal;
+    gap: 10px;
+  }
+}

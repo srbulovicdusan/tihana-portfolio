@@ -1,0 +1,245 @@
+.section {
+  position: relative;
+  padding: clamp(96px, 11vw, 170px) 4% clamp(110px, 13vw, 200px);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 20px 0;
+  margin-bottom: clamp(48px, 6vw, 96px);
+}
+
+.label {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: .6em;
+  color: rgba(244, 242, 238, .55);
+}
+
+.labelStrong {
+  color: #f4f2ee;
+}
+
+.title {
+  grid-column: 2 / -1;
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(52px, 7.4vw, 120px);
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+
+.titleIt {
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.04em;
+}
+
+/* ── Index rows ─────────────────────────────────────────────────────────── */
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  padding: clamp(18px, 2.2vw, 34px) 0;
+  border-top: 1px solid rgba(244, 242, 238, .16);
+  color: #f4f2ee;
+  transition: color .5s var(--ease-out);
+  outline-offset: 4px;
+}
+
+.alt {
+  padding: clamp(28px, 3.4vw, 54px) 0;
+}
+
+.row[data-dim] {
+  color: rgba(244, 242, 238, .3);
+}
+
+.rowLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background: #f4f2ee;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .9s var(--ease-io);
+}
+
+.alt .rowLine {
+  transform-origin: right;
+}
+
+.rowNum {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  padding-top: .5em;
+  font-size: 13px;
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(244, 242, 238, .55);
+}
+
+.alt .rowNum {
+  grid-column: 4;
+  justify-self: end;
+}
+
+.rowLabel {
+  grid-column: 2 / -1;
+  grid-row: 1;
+  min-width: 0;
+  font-size: clamp(32px, 5.4vw, 88px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: .98;
+  text-wrap: balance;
+  transform: translateX(0px);
+  transition: transform .7s var(--ease-out);
+}
+
+.alt .rowLabel {
+  grid-column: 1 / 4;
+}
+
+.rowArrow {
+  display: inline-block;
+  margin-left: .25em;
+  font-weight: 400;
+  font-size: .5em;
+  vertical-align: .35em;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity .5s, transform .7s var(--ease-out);
+}
+
+.row[data-on] .rowLine {
+  transform: scaleX(1);
+}
+
+.row[data-on] .rowLabel {
+  transform: translateX(14px);
+}
+
+.alt[data-on] .rowLabel {
+  transform: translateX(-14px);
+}
+
+.row[data-on] .rowArrow {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.listRule {
+  height: 1px;
+  background: rgba(244, 242, 238, .16);
+}
+
+/* Mobile: tapping a row with a video opens it inline */
+.inline {
+  width: min(100%, 360px);
+  margin: 0 0 clamp(24px, 6vw, 40px) 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #1b1b1d;
+}
+
+.inlineIndent {
+  margin-left: 25%;
+}
+
+.inlineVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Cursor-following preview (desktop) ─────────────────────────────────── */
+.preview {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(170px, 14vw, 220px);
+  pointer-events: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.pvInner {
+  opacity: 0;
+  transform: scale(.92);
+  transform-origin: 0 50%;
+  transition:
+    opacity .45s var(--ease-out),
+    transform .6s var(--ease-out);
+}
+
+.pvInner[data-on] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pvMedia {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #1b1b1d;
+}
+
+.pvLayer {
+  position: absolute;
+  inset: 0;
+  transition: opacity .45s;
+}
+
+.pvVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #1b1b1d;
+}
+
+.pvBlank {
+  position: absolute;
+  inset: 0;
+  background: #1b1b1d;
+}
+
+.pvCaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(244, 242, 238, .7);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px), (hover: none) {
+  .title {
+    grid-column: 1 / -1;
+  }
+
+  .preview {
+    display: none;
+  }
+}

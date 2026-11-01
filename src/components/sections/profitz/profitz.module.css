@@ -1,0 +1,111 @@
+/* Profitz-only sections. Shared case-study styles: ../case-study/case-study.module.css */
+
+/* ── 01 Hero ────────────────────────────────────────────────────────────── */
+.dashboard {
+  display: block;
+  width: 100%;
+  max-width: 1600px;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 40px 48px rgba(23, 23, 23, .16)) drop-shadow(0 8px 14px rgba(23, 23, 23, .08));
+}
+
+/* ── 04 System & mobile ─────────────────────────────────────────────────── */
+.sysGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  gap: 32px clamp(24px, 3vw, 48px);
+  align-items: center;
+  margin-top: clamp(36px, 4.4vw, 64px);
+}
+
+.sysTitle {
+  margin: 0 0 clamp(24px, 3vw, 40px);
+}
+
+.measure440 {
+  max-width: 440px;
+}
+
+.trio {
+  display: block;
+  width: 120%;
+  max-width: none;
+  height: auto;
+  margin: -11% 0 -11% 1.84%;
+}
+
+/* ── 05 Brand & landing page ────────────────────────────────────────────── */
+.brandTitle {
+  margin: clamp(36px, 4.4vw, 64px) 0 clamp(24px, 3vw, 40px);
+  font-weight: 500;
+  font-size: clamp(32px, 4.5vw, 73px);
+  line-height: .86;
+  letter-spacing: -.05em;
+}
+
+.brandBody {
+  margin: 0 0 clamp(40px, 5vw, 72px);
+  max-width: 560px;
+  font-size: clamp(17px, 1.3vw, 19px);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.brandGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(12px, 1.6vw, 24px);
+  align-items: stretch;
+  margin-bottom: clamp(40px, 6vw, 96px);
+}
+
+.logoBox {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #040404;
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  display: block;
+  width: 64%;
+  height: auto;
+}
+
+.laptopBox {
+  position: relative;
+  min-height: 0px;
+}
+
+.laptop {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  height: 188%;
+  width: auto;
+  max-width: none;
+  transform: translate(19%, -50%);
+  filter: drop-shadow(0 40px 48px rgba(23, 23, 23, .16)) drop-shadow(0 8px 14px rgba(23, 23, 23, .08));
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .sysGrid,
+  .brandGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trio {
+    width: 100%;
+    margin: -9% 0 -9%;
+  }
+
+  .laptopBox {
+    min-height: 60vw;
+  }
+}

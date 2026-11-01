@@ -1,0 +1,519 @@
+{
+  "/images/artprovenance-chat.png": {
+    "width": 3024,
+    "height": 1718,
+    "base": "/images/w/artprovenance-chat.5d60214b",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/artprovenance-hero-laptop.webp": {
+    "width": 2560,
+    "height": 1600,
+    "base": "/images/w/artprovenance-hero-laptop.12bb18df",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/artprovenance-landing-laptop.webp": {
+    "width": 2560,
+    "height": 1600,
+    "base": "/images/w/artprovenance-landing-laptop.9c178f6c",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/artprovenance-landing.webp": {
+    "width": 2400,
+    "height": 1800,
+    "base": "/images/w/artprovenance-landing.4c68485d",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2400
+    ]
+  },
+  "/images/artprovenance-record.png": {
+    "width": 3024,
+    "height": 1714,
+    "base": "/images/w/artprovenance-record.88fe7baf",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/artprovenance-results.png": {
+    "width": 3024,
+    "height": 1718,
+    "base": "/images/w/artprovenance-results.d4d75bf9",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/artprovenance-search.png": {
+    "width": 3020,
+    "height": 1716,
+    "base": "/images/w/artprovenance-search.0073b3f7",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/hero/artprovenance.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/artprovenance.faada810",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/classic-car-register.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/classic-car-register.02478ec9",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/jewelry-market-editorial.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/jewelry-market-editorial.1d12c83f",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/jewelry-market-packaging.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/jewelry-market-packaging.dd8cf64c",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/just-quit.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/just-quit.f3486479",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/miltop-invest.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/miltop-invest.55b2eccd",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/mobile-analytics.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/mobile-analytics.8502001b",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/no-days-wasted.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/no-days-wasted.751b96bf",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/predator.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/predator.2a5857dc",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/profitz.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/profitz.1d237aec",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/sekundarac.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/sekundarac.befc1736",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/hero/winchester.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/hero/winchester.0bd61c62",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/no-days-wasted-desktop.webp": {
+    "width": 2560,
+    "height": 1600,
+    "base": "/images/w/no-days-wasted-desktop.009ffc78",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/no-days-wasted-laptop.webp": {
+    "width": 1200,
+    "height": 1440,
+    "base": "/images/w/no-days-wasted-laptop.bf1ef688",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/no-days-wasted-pdp.png": {
+    "width": 3024,
+    "height": 1714,
+    "base": "/images/w/no-days-wasted-pdp.688f1753",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/no-days-wasted-products.png": {
+    "width": 3024,
+    "height": 1716,
+    "base": "/images/w/no-days-wasted-products.e2f622e3",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/profitz-dashboard.webp": {
+    "width": 2401,
+    "height": 1713,
+    "base": "/images/w/profitz-dashboard.8b9fa8c9",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2401
+    ]
+  },
+  "/images/profitz-landing-laptop.png": {
+    "width": 4000,
+    "height": 3000,
+    "base": "/images/w/profitz-landing-laptop.3da465c5",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/profitz-logo.png": {
+    "width": 334,
+    "height": 105,
+    "base": "/images/w/profitz-logo.8aefeb61",
+    "widths": [
+      334
+    ]
+  },
+  "/images/profitz-mapping.png": {
+    "width": 1440,
+    "height": 964,
+    "base": "/images/w/profitz-mapping.c0aca5c3",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1440
+    ]
+  },
+  "/images/profitz-mobile-screens.webp": {
+    "width": 6000,
+    "height": 4500,
+    "base": "/images/w/profitz-mobile-screens.23613f08",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2560
+    ]
+  },
+  "/images/profitz-mobile.webp": {
+    "width": 1200,
+    "height": 1440,
+    "base": "/images/w/profitz-mobile.82a0f048",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/profitz-pnl.png": {
+    "width": 1440,
+    "height": 964,
+    "base": "/images/w/profitz-pnl.013fa94b",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1440
+    ]
+  },
+  "/images/profitz-watchlist.png": {
+    "width": 1440,
+    "height": 964,
+    "base": "/images/w/profitz-watchlist.c0c70789",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1440
+    ]
+  },
+  "/images/sekundarac-business-cards.jpg": {
+    "width": 1920,
+    "height": 1280,
+    "base": "/images/w/sekundarac-business-cards.a98614e2",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920
+    ]
+  },
+  "/images/sekundarac-keychains.jpg": {
+    "width": 1200,
+    "height": 900,
+    "base": "/images/w/sekundarac-keychains.1e829e85",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/sekundarac-lighters.jpg": {
+    "width": 1200,
+    "height": 800,
+    "base": "/images/w/sekundarac-lighters.46bafe29",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/sekundarac-logo-green.png": {
+    "width": 575,
+    "height": 574,
+    "base": "/images/w/sekundarac-logo-green.6279dfb8",
+    "widths": [
+      384,
+      575
+    ]
+  },
+  "/images/sekundarac-logo-on-green.png": {
+    "width": 1920,
+    "height": 1920,
+    "base": "/images/w/sekundarac-logo-on-green.bcde6ac6",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920
+    ]
+  },
+  "/images/sekundarac-logo-on-white.png": {
+    "width": 1920,
+    "height": 1924,
+    "base": "/images/w/sekundarac-logo-on-white.7c0836b0",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920
+    ]
+  },
+  "/images/sekundarac-logo-white.png": {
+    "width": 576,
+    "height": 575,
+    "base": "/images/w/sekundarac-logo-white.7caab48c",
+    "widths": [
+      384,
+      576
+    ]
+  },
+  "/images/sekundarac-pens.jpg": {
+    "width": 600,
+    "height": 600,
+    "base": "/images/w/sekundarac-pens.8c9a985c",
+    "widths": [
+      384,
+      600
+    ]
+  },
+  "/images/tihana-portrait.png": {
+    "width": 1670,
+    "height": 941,
+    "base": "/images/w/tihana-portrait.d4a91071",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1670
+    ]
+  }
+}

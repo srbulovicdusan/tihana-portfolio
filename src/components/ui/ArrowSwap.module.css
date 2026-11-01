@@ -1,0 +1,40 @@
+.box {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  overflow: hidden;
+  line-height: 1.15em;
+  font-weight: 400;
+}
+
+.a,
+.b {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  transition: transform .6s var(--ease-io);
+}
+
+.a {
+  transform: translate(0%, 0%);
+}
+
+.b {
+  transform: translate(-100%, 100%);
+}
+
+/* Hosts opt in with data-arrow-host; media gate mirrors the originals'
+   "no hover effects on touch / ≤760px" rule. */
+@media (width > 760px) and (hover: hover) {
+  :global([data-arrow-host]:hover) .a,
+  :global([data-arrow-host]:focus-visible) .a {
+    transform: translate(100%, -100%);
+  }
+
+  :global([data-arrow-host]:hover) .b,
+  :global([data-arrow-host]:focus-visible) .b {
+    transform: translate(0%, 0%);
+  }
+}

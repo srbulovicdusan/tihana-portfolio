@@ -1,0 +1,38 @@
+.section {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+  padding: 120px 4% 80px;
+  background: #111213;
+}
+
+.label {
+  color: rgba(244, 242, 238, .55);
+}
+
+.title {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(56px, 10.4vw, 172px);
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+
+.title .indent {
+  padding-left: 25%;
+}
+
+.back {
+  align-self: flex-start;
+  font-size: 15px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+  transition: opacity .3s;
+}
+
+.back:hover {
+  opacity: .7;
+}

@@ -1,0 +1,83 @@
+.section {
+  position: relative;
+  background: #111213;
+  padding: clamp(56px, 7vw, 112px) 4% clamp(96px, 11vw, 170px);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.title {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(46px, 10.4vw, 172px);
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+
+.title .i25,
+.title .indent {
+  padding-left: 25%;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Desktop: the paragraph sits in the bottom-left of the heading's own cell */
+.para {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  align-self: end;
+  margin-top: 0;
+  padding: 0 clamp(12px, 2vw, 32px) calc(clamp(46px, 10.4vw, 172px) * .14 - 8px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.label {
+  color: rgba(244, 242, 238, .55);
+}
+
+.text {
+  margin: 0;
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1199px) {
+  .para {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    margin-top: 48px;
+    padding-bottom: .9em;
+    max-width: 480px;
+  }
+}
+
+/* "mobile" in the original: narrow viewports or touch-only devices */
+@media (max-width: 760px), (hover: none) {
+  .title {
+    grid-row: 2;
+  }
+
+  .title .indent {
+    padding-left: 0%;
+  }
+
+  .para {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 40px;
+    padding-bottom: .9em;
+    max-width: 480px;
+  }
+}

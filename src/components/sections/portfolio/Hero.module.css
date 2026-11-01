@@ -1,0 +1,407 @@
+/* The hero was designed as a standalone document embedded in an iframe. It is
+   inlined here as a size container: vw/vh became cqw/cqh and viewport media
+   queries became container queries, so geometry still follows the hero box. */
+.intro {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  container: hero / size;
+  background: #111213;
+  color: #f4f2ee;
+  text-rendering: auto;
+}
+
+/* Bottom fade into the next section, driven by scroll (PortfolioEffects) */
+.fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(17, 18, 19, 0), #111213 92%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Studio light ───────────────────────────────────────────────────────── */
+.glow,
+.stage {
+  --cy: 45%;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(176deg, #141516 0%, #111213 38%, #0e0f10 72%, #0b0c0d 100%);
+}
+
+.mv {
+  position: absolute;
+  inset: -40px;
+  will-change: transform;
+}
+
+.lt {
+  position: absolute;
+  inset: 0;
+  opacity: .55;
+  animation: lightUp 2.4s .3s var(--ease-expo) forwards;
+}
+
+@keyframes lightUp {
+  to {
+    opacity: 1;
+  }
+}
+
+.beam {
+  position: absolute;
+  left: 44%;
+  top: -20%;
+  width: 58cqw;
+  height: 128%;
+  transform: translateX(-50%) rotate(-8deg);
+  transform-origin: 50% 0;
+  background: radial-gradient(ellipse 46% 100% at 50% 0%, rgba(85, 88, 91, .5) 0%, rgba(52, 54, 56, .42) 30%, rgba(52, 54, 56, .14) 60%, rgba(52, 54, 56, 0) 82%);
+  filter: blur(56px);
+}
+
+.src {
+  position: absolute;
+  left: 41%;
+  top: -14%;
+  width: 38cqw;
+  height: 34cqh;
+  transform: translateX(-50%) rotate(-6deg);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(85, 88, 91, .42) 0%, rgba(85, 88, 91, 0) 70%);
+  filter: blur(44px);
+}
+
+.pool {
+  position: absolute;
+  left: 50%;
+  top: var(--cy);
+  width: 96cqw;
+  height: 74cqh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse 50% 50% at 47% 48%, rgba(52, 54, 56, .55) 0%, rgba(52, 54, 56, .24) 42%, rgba(52, 54, 56, 0) 74%);
+  filter: blur(36px);
+}
+
+.haze {
+  position: absolute;
+  left: 50%;
+  top: var(--cy);
+  width: 46cqw;
+  height: 30cqh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(85, 88, 91, .16) 0%, rgba(85, 88, 91, 0) 72%);
+  filter: blur(40px);
+}
+
+.vig {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 75% at 48% 44%, rgba(9, 10, 11, 0) 52%, rgba(9, 10, 11, .45) 82%, rgba(9, 10, 11, .8) 100%),
+    linear-gradient(to bottom, rgba(9, 10, 11, 0) 70%, rgba(9, 10, 11, .35) 100%);
+}
+
+/* ── Corridor ───────────────────────────────────────────────────────────── */
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Cards are positioned by HeroScene; hidden until first measured. */
+.stage:not([data-ready]) {
+  visibility: hidden;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: var(--cy);
+  transform-origin: 50% 50%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #141414;
+  box-shadow: 0 28px 64px rgba(0, 0, 0, .55), 0 6px 18px rgba(0, 0, 0, .35);
+}
+
+.ct {
+  position: absolute;
+  inset: 0;
+}
+
+.cardImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 50%;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: #060606;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ── UI layer ───────────────────────────────────────────────────────────── */
+.ui {
+  position: absolute;
+  z-index: 4;
+  font-size: 15px;
+  line-height: 1.45;
+  opacity: 0;
+  animation: fadeIn 1s .2s cubic-bezier(.75, 0, .2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.tl {
+  left: 4%;
+  top: 5%;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.logo sup {
+  font-size: .5em;
+  vertical-align: super;
+}
+
+.tc {
+  left: 50%;
+  top: 5%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.services {
+  color: rgba(244, 242, 238, .55);
+  line-height: 37.7px;
+}
+
+.dv {
+  display: inline-block;
+  margin: 0 .75em;
+  opacity: .45;
+  font-weight: 300;
+}
+
+.tr {
+  right: 4%;
+  top: 5%;
+  text-align: right;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  line-height: 37.7px;
+}
+
+.nav a {
+  transition: opacity .3s;
+}
+
+.nav a:hover {
+  opacity: .6;
+}
+
+.ml {
+  left: 4%;
+  bottom: 6%;
+  max-width: min(680px, 52cqw);
+  margin: 0;
+  font-size: clamp(18px, 1.6cqw, 24px);
+  font-weight: inherit;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+
+.ln {
+  display: block;
+  white-space: nowrap;
+}
+
+.hi {
+  display: block;
+  font-size: 14px;
+  color: rgba(244, 242, 238, .55);
+  margin-bottom: 10px;
+  letter-spacing: 0;
+}
+
+.mr {
+  right: 4%;
+  bottom: 6%;
+  text-align: right;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+}
+
+.cta:hover {
+  opacity: .7;
+}
+
+.info {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  z-index: 4;
+  text-align: center;
+}
+
+.explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #f4f2ee;
+  padding: 10px 2px 3px;
+  border-bottom: 1px solid rgba(244, 242, 238, .32);
+  transition: border-color .4s, opacity .4s;
+}
+
+.explore:hover {
+  border-color: #f4f2ee;
+}
+
+.explore span {
+  display: inline-block;
+  transition: transform .5s var(--ease-expo);
+}
+
+.explore:hover span {
+  transform: translateY(3px);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@container hero (max-width: 1100px) and (min-width: 761px) {
+  .ml {
+    max-width: 36cqw;
+    font-size: 16px;
+  }
+
+  .ln {
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
+
+@container hero (max-width: 760px) {
+  .glow,
+  .stage {
+    --cy: 40%;
+  }
+
+  .tc {
+    display: none;
+  }
+
+  .ml {
+    left: 6%;
+    right: 6%;
+    bottom: calc(5% + 44px);
+    max-width: none;
+    font-size: 19px;
+  }
+
+  .ln {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .mr {
+    left: 6%;
+    right: auto;
+    bottom: 5%;
+    text-align: left;
+  }
+
+  .nav {
+    gap: 22px;
+  }
+
+  /* Just below the corridor's foreground cards: cy + half a card height + 6% */
+  .info {
+    bottom: auto;
+    top: calc(46% + min(19.884cqw, 25cqh));
+  }
+
+  .beam {
+    width: 110cqw;
+  }
+
+  .src {
+    width: 70cqw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt {
+    animation: none;
+    opacity: 1;
+  }
+}

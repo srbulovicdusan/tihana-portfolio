@@ -1,0 +1,87 @@
+/* clip-path is animated on scroll by PortfolioEffects */
+.section {
+  position: relative;
+  background: #e8e8e8;
+  color: #171717;
+  padding: clamp(72px, 9vw, 140px) 4% clamp(110px, 12vw, 190px);
+}
+
+.meta {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: baseline;
+  gap: 8px 0;
+  padding-bottom: 16px;
+  color: #777777;
+  font-variant-numeric: tabular-nums;
+}
+
+.metaStrong {
+  color: #171717;
+}
+
+.metaEnd {
+  text-align: right;
+}
+
+.rule {
+  position: relative;
+  height: 1px;
+  background: #d3d3d3;
+}
+
+.head {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 24px 0;
+  margin: clamp(28px, 3.6vw, 56px) 0 clamp(32px, 3.6vw, 52px);
+}
+
+.title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(60px, 12.4vw, 210px);
+  line-height: .84;
+  letter-spacing: -.055em;
+}
+
+.intro {
+  grid-column: 4 / -1;
+  margin: 0;
+  max-width: 300px;
+  padding-left: clamp(16px, 2vw, 28px);
+  font-size: 15px;
+  line-height: 1.45;
+  color: #777777;
+  text-wrap: pretty;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(64px, 7vw, 120px) clamp(16px, 2vw, 32px);
+  margin-top: clamp(64px, 7vw, 120px);
+}
+
+@media (max-width: 1199px) {
+  .intro {
+    grid-column: 3 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .intro {
+    grid-column: 1 / -1;
+    padding-left: 0px;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
