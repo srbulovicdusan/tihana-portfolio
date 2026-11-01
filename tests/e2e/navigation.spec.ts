@@ -20,28 +20,45 @@ test.describe('portfolio navigation', () => {
     await expect(page).toHaveURL(/\/work\/profitz$/);
   });
 
-  test('cards without a case study open the placeholder route', async ({ page }) => {
-    await page.goto('/');
+  test('cards with a case study open its page, and back returns to the portfolio', async ({ page }) => {
     const cases = [
-      ['ArtProvenance', '01'],
-      ['No Days Wasted', '03'],
-      ['Sekundarac', '04'],
-      ['Email Design', '05'],
+      ['ArtProvenance', '/work/artprovenance', 'Art Provenance'],
+      ['No Days Wasted', '/work/no-days-wasted', 'No Days Wasted'],
+      ['Sekundarac', '/work/sekundarac', 'Sekundarac'],
     ] as const;
-    for (const [name, num] of cases) {
-      await page.getByRole('link', { name: new RegExp(`^${name} `) }).click();
-      const dialog = page.getByRole('dialog');
-      await expect(dialog).toBeVisible();
-      await expect(dialog.getByRole('heading')).toHaveText(name);
-      await expect(dialog).toContainText(`Case study ${num} / 05`);
-      await dialog.getByRole('link', { name: '← Back to work' }).click();
-      await expect(dialog).toBeHidden();
-      await expect(page).toHaveURL(/#work$/);
+    await page.goto('/');
+    for (const [card, path, h1] of cases) {
+      await page.getByRole('link', { name: new RegExp(`^${card} `) }).click();
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
+      await expect(page.locator('h1')).toHaveText(h1);
+      await page.goBack();
+      await expect(page).toHaveURL(/\/$/);
+    }
+    await page.goForward();
+    await expect(page).toHaveURL(/\/work\/sekundarac$/);
+  });
+
+  test('the card without a case study opens the placeholder route', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: /^Email Design / }).click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('heading')).toHaveText('Email Design');
+    await expect(dialog).toContainText('Case study 05 / 05');
+    await dialog.getByRole('link', { name: '← Back to work' }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page).toHaveURL(/#work$/);
+  });
+
+  test('placeholder hashes of built case studies redirect to their pages', async ({ page }) => {
+    for (const slug of ['artprovenance', 'no-days-wasted', 'sekundarac']) {
+      await page.goto(`/#work/${slug}`);
+      await expect(page).toHaveURL(new RegExp(`/work/${slug}$`));
     }
   });
 
   test('Escape closes the placeholder dialog', async ({ page }) => {
-    await page.goto('/#work/sekundarac');
+    await page.goto('/#work/email-design');
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toBeHidden();
@@ -68,9 +85,9 @@ test.describe('site navigation from inner pages', () => {
     const nav = page.getByRole('navigation', { name: 'Primary' });
     await expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'page');
 
-    await page.getByRole('link', { name: 'No Days Wasted' }).click();
-    await expect(page).toHaveURL(/\/#work\/no-days-wasted$/);
-    await expect(page.getByRole('dialog')).toContainText('No Days Wasted');
+    await page.getByRole('link', { name: /No Days Wasted/ }).click();
+    await expect(page).toHaveURL(/\/work\/no-days-wasted$/);
+    await expect(page.locator('h1')).toHaveText('No Days Wasted');
 
     await page.goto('/work/profitz');
     await page.getByRole('link', { name: /Back to work/ }).first().click();
@@ -84,6 +101,34 @@ test.describe('site navigation from inner pages', () => {
     await nav.getByRole('link', { name: /Tihana/ }).click();
     await expect(page).toHaveURL(/\/$/);
   });
+
+  test('next-project links chain through the case studies', async ({ page }) => {
+    await page.goto('/work/artprovenance');
+    const chain = [
+      ['Profitz', '/work/profitz'],
+      ['No Days Wasted', '/work/no-days-wasted'],
+      ['Sekundarac', '/work/sekundarac'],
+    ] as const;
+    for (const [name, path] of chain) {
+      await page.locator('#next').getByRole('link', { name: new RegExp(name) }).click();
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
+      await expect(page.locator('h1')).toHaveText(name);
+    }
+    // The email case study has no page yet: its placeholder route
+    await page.locator('#next').getByRole('link', { name: /Email Design/ }).click();
+    await expect(page).toHaveURL(/\/#work\/email-design$/);
+    await expect(page.getByRole('dialog')).toContainText('Email Design');
+  });
+
+  for (const path of ['/work/artprovenance', '/work/no-days-wasted', '/work/sekundarac']) {
+    test(`${path}: back to work and primary navigation`, async ({ page }) => {
+      await page.goto(path);
+      await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'page');
+      await page.getByRole('link', { name: /Back to work/ }).first().click();
+      await expect(page).toHaveURL(/\/#work$/);
+      await expect(page.locator('#work')).toBeInViewport();
+    });
+  }
 
   test('back to top returns to the top without changing the URL', async ({ page }) => {
     await page.goto('/about');

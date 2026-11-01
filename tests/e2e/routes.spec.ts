@@ -3,7 +3,10 @@ import { expect, test } from '@playwright/test';
 const PAGES = [
   { path: '/', title: 'Tihana — Portfolio', h1: /I design brands and everything they touch/ },
   { path: '/about', title: 'About — Tihana', h1: /A little\s*A?\s*more\s*about\s*me\./ },
+  { path: '/work/artprovenance', title: 'Art Provenance — Case study — Tihana', h1: /^Art Provenance$/ },
   { path: '/work/profitz', title: 'Profitz — Case study — Tihana', h1: /^Profitz$/ },
+  { path: '/work/no-days-wasted', title: 'No Days Wasted — Case study — Tihana', h1: /^No Days Wasted$/ },
+  { path: '/work/sekundarac', title: 'Sekundarac — Case study — Tihana', h1: /^Sekundarac$/ },
 ];
 
 for (const p of PAGES) {
@@ -33,17 +36,26 @@ test('unknown routes return 404', async ({ page }) => {
   await expect(page.locator('h1')).toHaveText(/Page not\s*found\./);
 });
 
-test('preferred alias URLs redirect to the case study', async ({ request }) => {
-  for (const alias of ['/projects/profits', '/projects/profitz']) {
+test('preferred alias URLs redirect to the case studies', async ({ request }) => {
+  const aliases = [
+    ['/projects/profits', '/work/profitz'],
+    ['/projects/profitz', '/work/profitz'],
+    ['/projects/art-provenance', '/work/artprovenance'],
+    ['/projects/artprovenance', '/work/artprovenance'],
+    ['/work/art-provenance', '/work/artprovenance'],
+    ['/projects/no-days-wasted', '/work/no-days-wasted'],
+    ['/projects/sekundarac', '/work/sekundarac'],
+  ] as const;
+  for (const [alias, target] of aliases) {
     const res = await request.get(alias, { maxRedirects: 0 });
     expect(res.status()).toBe(308);
-    expect(res.headers().location).toBe('/work/profitz');
+    expect(res.headers().location).toBe(target);
   }
 });
 
 test('sitemap and robots list the pages', async ({ request }) => {
   const sitemap = await (await request.get('/sitemap.xml')).text();
-  for (const path of ['/</loc>', '/about</loc>', '/work/profitz</loc>']) expect(sitemap).toContain(path);
+  for (const p of PAGES) expect(sitemap).toContain(`${p.path}</loc>`);
   const robots = await (await request.get('/robots.txt')).text();
   expect(robots).toMatch(/Allow: \//);
   expect(robots).toMatch(/Sitemap: .*\/sitemap\.xml/);

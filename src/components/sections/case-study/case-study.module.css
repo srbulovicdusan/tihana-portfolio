@@ -475,7 +475,9 @@
 .asideBody {
   flex: 0 1 40%;
   min-width: min(100%, 300px);
-  margin: 0 0 calc(clamp(40px, 6.4vw, 104px) * .15 - 5px) auto;
+  /* The design's calc(clamp(40px, 6.4vw, 104px) * .15 - 5px), pre-multiplied:
+     the minifier rewrites `* .15` as `/ 6.66667`, which lands 1/64px short. */
+  margin: 0 0 calc(clamp(6px, .96vw, 15.6px) - 5px) auto;
   max-width: 460px;
   font-size: clamp(16px, 1.2vw, 18px);
   line-height: 1.55;

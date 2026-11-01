@@ -61,7 +61,7 @@ export function CaseHero({ titleId, tags, caseNumber, title, titleSize, titleNow
         </Link>
         <div className={`eyebrow ${styles.heroMeta}`}>
           <span className={styles.strong}>{tags}</span>
-          <span>Case Study ({caseNumber})</span>
+          <span>{`Case Study (${caseNumber})`}</span>
         </div>
         <div {...reveal('rule')} className={styles.rule} />
 

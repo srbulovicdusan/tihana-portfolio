@@ -6,7 +6,9 @@ import { expect, test } from '@playwright/test';
 // They are logged below and listed in README.md for a design decision.
 const DESIGN_EXCEPTIONS = ['color-contrast'];
 
-for (const path of ['/', '/about', '/work/profitz', '/#work/artprovenance']) {
+const PATHS = ['/', '/about', '/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac', '/#work/email-design'];
+
+for (const path of PATHS) {
   test(`axe: ${path}`, async ({ page }, testInfo) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(path);
@@ -41,10 +43,28 @@ test('hidden sticky nav is not keyboard-reachable on the hero', async ({ page, i
   expect(await page.locator(':focus').evaluate(el => !!el.closest('[inert]'))).toBe(false);
 });
 
-test('reduced motion shows all content without animation', async ({ page }) => {
+for (const path of ['/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac']) {
+  test(`reduced motion shows all content without animation: ${path}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(path);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    const hidden = await page.locator('[data-reveal]').evaluateAll(els => els.filter(e => getComputedStyle(e).opacity === '0').length);
+    expect(hidden).toBe(0);
+  });
+}
+
+test('looping videos stay paused on a still frame with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/work/profitz');
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  const hidden = await page.locator('[data-reveal]').evaluateAll(els => els.filter(e => getComputedStyle(e).opacity === '0').length);
-  expect(hidden).toBe(0);
+  await page.goto('/work/sekundarac');
+  const video = page.locator('#top video');
+  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState >= 1 && v.currentTime)).toBeCloseTo(8.4, 1);
+  expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+});
+
+test('looping videos load near the viewport and play muted', async ({ page }) => {
+  await page.goto('/work/no-days-wasted');
+  const video = page.locator('#features video');
+  expect(await video.evaluate((v: HTMLVideoElement) => v.readyState)).toBe(0);
+  await video.scrollIntoViewIfNeeded();
+  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused && v.muted)).toBe(true);
 });

@@ -48,6 +48,11 @@ a:hover {
   color: #171717;
 }
 
+/* No Days Wasted and Sekundarac: grey page on the same light theme */
+.page[data-theme='light'][data-surface='grey'] {
+  background: #e8e8e8;
+}
+
 /* Light pages (case study) */
 html:has(main[data-theme='light']),
 html:has(main[data-theme='light']) body {

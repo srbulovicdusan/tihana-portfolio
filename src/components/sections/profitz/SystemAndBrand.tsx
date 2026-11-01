@@ -1,20 +1,19 @@
 import Image from 'next/image';
+import { SectionHead } from '@/components/sections/case-study/SectionHead';
+import { SplitHeading } from '@/components/sections/case-study/SplitHeading';
+import cs from '@/components/sections/case-study/case-study.module.css';
 import { img } from '@/lib/images';
 import { reveal } from '@/lib/reveal';
-import { SplitHeading } from './SplitHeading';
 import styles from './profitz.module.css';
 
 export function SystemMobile() {
   return (
-    <section id="system" className={`${styles.section} ${styles.openBottom}`} aria-labelledby="system-title">
-      <div className={`eyebrow ${styles.metaRow}`}>
-        <span className={styles.strong}>(04) System &amp; Mobile</span>
-      </div>
-      <div {...reveal('rule')} className={styles.rule} />
+    <section id="system" className={`${cs.section} ${cs.openBottom}`} aria-labelledby="system-title">
+      <SectionHead label="(04) System & Mobile" />
       <div className={styles.sysGrid}>
         <div>
-          <SplitHeading id="system-title" className={`${styles.titleM} ${styles.sysTitle}`} first="Built to" indent="Built " accent="scale." />
-          <p {...reveal('fade')} className={`${styles.body} ${styles.measure440}`}>
+          <SplitHeading id="system-title" className={`${cs.titleM} ${styles.sysTitle}`} first="Built to" indent="Built " accent="scale." />
+          <p {...reveal('fade')} className={`${cs.body} ${styles.measure440}`}>
             One design system of reusable tables, charts, filters and status indicators kept the product coherent, and let
             dense desktop views adapt to mobile without losing clarity.
           </p>
@@ -33,13 +32,10 @@ export function SystemMobile() {
 
 export function BrandLanding() {
   return (
-    <section id="brand" className={`${styles.section} ${styles.openBottom}`} aria-labelledby="brand-title">
-      <div className={`eyebrow ${styles.metaRow}`}>
-        <span className={styles.strong}>(05) Brand &amp; Landing Page</span>
-      </div>
-      <div {...reveal('rule')} className={styles.rule} />
-      <SplitHeading id="brand-title" className={`${styles.titleM} ${styles.brandTitle}`} first="Know your" indent="Know " accent="real profit." />
-      <p {...reveal('fade')} className={`${styles.body} ${styles.brandBody}`}>
+    <section id="brand" className={`${cs.section} ${cs.openBottom}`} aria-labelledby="brand-title">
+      <SectionHead label="(05) Brand & Landing Page" />
+      <SplitHeading id="brand-title" className={styles.brandTitle} first="Know your" indent="Know " accent="real profit." />
+      <p {...reveal('fade')} className={styles.brandBody}>
         I created the logo and core identity, and designed the marketing landing page for desktop and mobile.
       </p>
       <div className={styles.brandGrid}>
@@ -61,16 +57,13 @@ export function BrandLanding() {
 
 export function Outcome() {
   return (
-    <section id="outcome" className={`${styles.section} ${styles.openBottom}`} aria-labelledby="outcome-title">
-      <div className={`eyebrow ${styles.metaRow}`}>
-        <span className={styles.strong}>(06) Outcome</span>
-      </div>
-      <div {...reveal('rule')} className={styles.rule} />
-      <div className={styles.outcome}>
-        <div className={styles.outcomeHead}>
-          <SplitHeading id="outcome-title" className={`${styles.titleL} ${styles.outcomeTitle}`} first="From MVP to" indent="From MVP " accent="platform." />
+    <section id="outcome" className={`${cs.section} ${cs.openBottom}`} aria-labelledby="outcome-title">
+      <SectionHead label="(06) Outcome" />
+      <div className={cs.aside}>
+        <div className={cs.asideHead}>
+          <SplitHeading id="outcome-title" className={`${cs.titleL} ${cs.asideTitle}`} first="From MVP to" indent="From MVP " accent="platform." />
         </div>
-        <p {...reveal('fade', 120)} className={styles.outcomeBody}>
+        <p {...reveal('fade', 120)} className={cs.asideBody}>
           Over ten months, Profitz grew from a profitability MVP into a platform for financial analytics, advertising,
           expenses, collaboration and competitor intelligence. The most valuable part was balancing new functionality
           against simplicity, with decisions built to hold up as it grew.

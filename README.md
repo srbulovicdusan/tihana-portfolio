@@ -1,14 +1,17 @@
 # Tihana — Portfolio
 
-Next.js rebuild of three design exports (kept in the repo root as the visual source of truth):
+Next.js rebuild of six design exports (kept in the repo root as the visual source of truth):
 
-| Export | Route |
-| --- | --- |
-| `Tihana Portfolio.html` | `/` |
-| `Tihana About.html` | `/about` |
-| `Profitz Case Study.html` | `/work/profitz` (`/projects/profits` and `/projects/profitz` redirect here, 308) |
+| Export | Route | Aliases (308) |
+| --- | --- | --- |
+| `Tihana Portfolio.html` | `/` | |
+| `Tihana About.html` | `/about` | |
+| `Art Provenance.html` | `/work/artprovenance` | `/projects/art-provenance`, `/projects/artprovenance`, `/work/art-provenance` |
+| `Profitz Case Study.html` | `/work/profitz` | `/projects/profits`, `/projects/profitz` |
+| `No Days Wasted.html` | `/work/no-days-wasted` | `/projects/no-days-wasted` |
+| `Sekundarac.html` | `/work/sekundarac` | `/projects/sekundarac` |
 
-The case-study URL follows the export's own scheme: cards without a page open an in-page placeholder at `#work/<slug>` whose copy reads "Route: /work/<slug>".
+Case-study URLs follow the export's own scheme, `/work/<slug>` with the portfolio card's slug. The one card without a page (Email Design) opens an in-page placeholder at `#work/email-design`; the placeholder hash of a built case study redirects to its page. Each case study's "Next project" link leads to the next one: Art Provenance → Profitz → No Days Wasted → Sekundarac → the Email Design placeholder.
 
 ## Stack
 
@@ -28,7 +31,7 @@ npm run dev                  # http://localhost:3000
 | `npm run build` / `npm start` | Production build (all routes statically prerendered) / serve it |
 | `npm run lint` · `npm run typecheck` | ESLint · `tsc --noEmit` |
 | `npm run test:e2e` | Playwright tests against the production build (run `npm run build` first) |
-| `npm run assets:extract` | Re-extract images, videos and fonts from the HTML exports |
+| `npm run assets:extract` | Re-extract images, videos and fonts from the HTML exports (deduplicated by SHA-256) |
 | `npm run assets:optimize` | Regenerate responsive WebP variants + `src/lib/image-manifest.json` (needs `cwebp`) |
 
 `NEXT_PUBLIC_SITE_URL` feeds canonical URLs, Open Graph, `sitemap.xml` and `robots.txt`. Without it the build warns and falls back to `http://localhost:3000`.
@@ -39,25 +42,32 @@ npm run dev                  # http://localhost:3000
 src/app/                     routes, metadata, sitemap/robots, 404, OG images, fonts
 src/components/navigation/   SiteNav (fixed, mix-blend-mode: difference)
 src/components/layout/       ContactSection + NameSignature (shared footer)
-src/components/sections/     per-page sections (portfolio/, about/, profitz/)
-src/components/behavior/     small client helpers: ScrollLink, HoverGroup
+src/components/sections/     case-study/ (template shared by the four case studies) and
+                             per-page sections (portfolio/, about/, artprovenance/, profitz/, sekundarac/)
+src/components/behavior/     small client helpers: ScrollLink, HoverGroup, AutoplayVideo
 src/lib/runtime/             inline-script runtimes (reveals, hero corridor)
 scripts/                     asset extraction and image optimisation
 tests/e2e/                   routing, navigation, metadata, accessibility
+visual-comparison/           screenshots and diffs against the exports (git-ignored, see its README)
 ```
 
-- **Server Components by default.** Client code is limited to the hero scene, the Expertise list (hover preview, mobile tap-to-play), the `#work/<slug>` placeholder dialog, the portfolio scroll effects, and two small link/hover helpers. The app's own client JS is about 6 KB gzipped on the homepage; the rest is the React/Next runtime.
+- **Server Components by default.** Client code is limited to the hero scene, the Expertise list (hover preview, mobile tap-to-play), the `#work/<slug>` placeholder dialog, the portfolio scroll effects, two small link/hover helpers, and the case-study video player (`AutoplayVideo`, under 1 KB, loaded only by No Days Wasted and Sekundarac). The app's own client JS is about 6 KB gzipped on the homepage; the rest is the React/Next runtime.
+- **Case-study template.** The four case studies share one section system (`case-study/`: hero, overview, dark key features, heading-with-aside, next project) and one stylesheet; each page passes its content as props and adds only its own sections (Profitz's system/brand/outcome, Art Provenance's landing page, Sekundarac's concept and applications). No shared class is overridden from another module, so CSS order across modules never matters.
 - **Inline runtimes.** Scroll reveals (`reveal-runtime.ts`) and the hero corridor (`corridor-runtime.ts`) run as inline scripts serialised with `Function.prototype.toString`, so above-the-fold motion starts during HTML parsing instead of after hydration (this is what keeps mobile LCP under 2.5 s). They must stay self-contained: no imports and no outer references.
 - **Layout logic in CSS.** The exports switched layouts with `matchMedia` → React state; here those are media queries, so the server HTML is already correct at every width. Breakpoints: `760px` (mobile, or `hover: none` where the export did so), `1099/1100px`, `1199px`.
 - **Hero.** The export embedded the hero as an iframe. It is inlined as a CSS size container, with `vw/vh` → `cqw/cqh` and media → container queries, so its geometry still follows the hero box.
 - **Fonts.** Inter Tight is self-hosted from the exports (latin subset, variable weight) via `next/font/local`. It keeps the original `unicode-range` and has no metric-adjusted fallback, because ←, → and ↗ must fall back to the same system fonts as in the exports.
-- **Images.** Originals are extracted byte-for-byte to `public/images/` (not referenced at runtime). `scripts/optimize-images.mjs` writes content-hashed WebP variants to `public/images/w/`, served through a custom `next/image` loader (`src/lib/image-loader.ts`) with long-lived immutable caching. There is no runtime image optimiser.
+- **Images.** Originals are extracted byte-for-byte to `public/images/` (not referenced at runtime). `scripts/optimize-images.mjs` writes content-hashed WebP variants (from PNG, WebP or JPEG) to `public/images/w/`, served through a custom `next/image` loader (`src/lib/image-loader.ts`) with long-lived immutable caching. There is no runtime image optimiser. Sources tagged with a non-sRGB colour profile (display-profile screenshots, Adobe RGB) keep it in their variants, so they are colour-managed like the originals; cwebp would otherwise drop it and shift the colours (the Sekundarac green rendered `#0D5A30` instead of `#146533`).
+- **Videos.** Self-hosted MP4s, byte-for-byte from the exports, played muted and looped by `AutoplayVideo`.
 
 ## Deliberate differences from the exports
 
 1. **About hero, portrait tablets:** the export's intro width `calc(46vw - 36vh)` goes negative around 768×1024, so the paragraph collapses to one word per line over the bottom bar. A 180px floor is applied only where that formula drops below 180px.
 2. **Accessibility without visual change:** a single `<h1>` per page; the hidden fixed nav is `inert`; the placeholder dialog gets `aria-modal`, focus and Escape handling. Project cards are named by their visible title and category (WCAG 2.5.3), and decorative numbers and arrows are hidden from assistive tech.
 3. **Expertise preview videos** load when the section approaches the viewport rather than at page load.
+4. **Case-study videos** (No Days Wasted's animated hero, Sekundarac's logo animation) play while on or near the screen and pause once scrolled away; the No Days Wasted one is only fetched when it approaches the viewport. With `prefers-reduced-motion` they don't play: Sekundarac shows the completed logo (8.4 s), No Days Wasted its first frame.
+5. **Case-study next-project names** are `<h2>` headings (a `<span>` with the same styling in the exports), for a usable heading outline.
+6. **Minifier-proof calc:** the aside paragraph's `calc(clamp(40px, 6.4vw, 104px) * .15 - 5px)` margin is written pre-multiplied (`clamp(6px, .96vw, 15.6px) - 5px`). The CSS minifier rewrote `* .15` as `/ 6.66667`, which came out 1/64 px short and shifted later rules by a device pixel.
 
 ## Known design-level issues (not changed)
 
@@ -68,11 +78,15 @@ tests/e2e/                   routing, navigation, metadata, accessibility
   | `#777777` labels on `#E8E8E8` | 3.65:1 | 4.5:1 | `#686868` (4.55:1) |
   | `#92938F` large italic accents on `#E8E8E8` | 2.52:1 | 3:1 | `#848581` (3.03:1) |
   | `#92938F` large italic accents on `#F0EEE9` | 2.67:1 | 3:1 | `#888985` (3.04:1) |
-  | `#92938F` Profitz tagline (22px on mobile, below "large") | 2.67:1 | 4.5:1 | `#6B6C69` (4.56:1) |
+  | `#92938F` case-study taglines on `#F0EEE9` (22px on mobile, below "large") | 2.67:1 | 4.5:1 | `#6B6C69` (4.56:1) |
+  | `#92938F` case-study taglines on `#E8E8E8` (No Days Wasted, Sekundarac) | 2.52:1 | 4.5:1 | `#686966` (4.51:1) |
   | `#76736E` labels on `#F0EEE9` | 4.07:1 | 4.5:1 | `#6F6C68` (4.50:1) |
+  | `#76736E` labels on `#E8E8E8` (No Days Wasted, Sekundarac) | 3.85:1 | 4.5:1 | `#6B6864` (4.52:1) |
 
-  `#92938F` on the dark sections passes (6.1–6.4:1).
-- **Placeholder content** from the design is reproduced as specified: the "Email Design" card ("Insert WebP mockup"), the empty "UI/UX Design" / "Email Design" Expertise previews, and the `#work/<slug>` "Placeholder route" dialog for unbuilt case studies. These should be replaced before launch.
+  `#92938F` on the dark sections passes (6.1–6.4:1). axe also flags the fixed nav on light pages; that is a false positive, since it cannot evaluate the nav's `mix-blend-mode: difference`, which renders it near-black there.
+- **Placeholder content** from the design is reproduced as specified: the "Email Design" card ("Insert WebP mockup"), the empty "UI/UX Design" / "Email Design" Expertise previews, the `#work/email-design` "Placeholder route" dialog, and Sekundarac's next-project link, whose cover reads "Insert email project cover" and whose title is literally "[EMAIL PROJECT NAME]". These should be replaced before launch.
+- **Autoplaying looped video without a pause control** (No Days Wasted feature, Sekundarac hero), as designed. WCAG 2.2.2 asks for a pause mechanism for motion over 5 s; adding one is a visible change, so it is left to a design decision. Reduced-motion users get a still frame.
+- **Mobile Lighthouse LCP (~3.1–3.3 s simulated)** on all four case studies: the LCP element is the hero intro paragraph, and Chrome records it only once its 1.1 s reveal fade has finished. Measured with real throttling (4× CPU, 150 ms RTT, 1.6 Mbps) LCP is ~0.7 s. Starting the fade at a non-zero opacity would remove the delay without a visible change, but it changes the global reveal CSS on every page, so it is left as a decision.
 
 ## Dependencies and licences
 

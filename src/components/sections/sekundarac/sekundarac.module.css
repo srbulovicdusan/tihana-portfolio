@@ -1,0 +1,59 @@
+/* ── 01 Hero ────────────────────────────────────────────────────────────── */
+.heroVideo {
+  aspect-ratio: 16 / 9;
+  background: #fff;
+}
+
+/* ── 02 Concept · 03 Applications ───────────────────────────────────────── */
+.pair,
+.trio {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 24px);
+}
+
+.trio {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 24px);
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e6e6e6;
+}
+
+.wide {
+  aspect-ratio: 3 / 2;
+}
+
+.onWhite {
+  background: #fff;
+}
+
+.onGreen {
+  background: #146533;
+}
+
+.tileImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .pair,
+  .trio {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
