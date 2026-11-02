@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { Arrow } from '@/components/ui/Arrow';
 import styles from './SiteNav.module.css';
 
 type Props = {
@@ -37,7 +38,7 @@ export function SiteNav({ homeHref, workHref, aboutHref, current, revealOnScroll
           Work
         </NavLink>
         <NavLink href={aboutHref} className={styles.link} current={current === 'about'}>
-          About ↗
+          About <Arrow dir="up-right" />
         </NavLink>
       </div>
     </nav>

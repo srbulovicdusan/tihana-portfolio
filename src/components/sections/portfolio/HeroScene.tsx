@@ -28,8 +28,8 @@ const SEQ = [
 // multiple of the 6-image loop keeps every card on a fixed image.
 const M = 12;
 
-// Foreground cards reach ~1.3× the card width (25 / 28 / 33 % of the hero).
-const CARD_SIZES = '(max-width: 760px) 44vw, (max-width: 1100px) 37vw, 33vw';
+// Foreground cards reach ~1.3× the card width (25 / 28 / 46 % of the hero).
+const CARD_SIZES = '(max-width: 760px) 61vw, (max-width: 1100px) 37vw, 33vw';
 
 type Stage = HTMLDivElement & { __corridor?: { destroy(): void } };
 

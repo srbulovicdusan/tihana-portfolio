@@ -1,4 +1,5 @@
 import { reveal } from '@/lib/reveal';
+import styles from './case-study.module.css';
 
 type Props = {
   id: string;
@@ -19,8 +20,8 @@ export function SplitHeading({ id, className, first, indent, accent, nowrapFirst
         <span {...reveal('line')} className={nowrapFirst ? 'blk nowrap' : 'blk'}>{first}</span>
       </span>
       <span className="hl hl-clip">
-        <span {...reveal('line', 100)} className="blk nowrap">
-          <span aria-hidden="true" className="spacer">{indent}</span>
+        <span {...reveal('line', 100)} className={`blk nowrap ${styles.accentLine}`}>
+          <span aria-hidden="true" className={`spacer ${styles.accentIndent}`}>{indent}</span>
           <span className="it-light">{accent}</span>
         </span>
       </span>

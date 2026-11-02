@@ -23,7 +23,7 @@ export default function SekundaracPage() {
   return (
     <>
       <SiteNav homeHref={routes.home} workHref={routes.work} aboutHref={routes.about} current="work" />
-      <main className="page" data-theme="light" data-surface="grey" data-reveal-threshold="0.08">
+      <main className="page" data-theme="light" data-reveal-threshold="0.08">
         <CaseHero
           titleId="sekundarac-title"
           tags="Brand Identity · Rebrand · Motion"

@@ -62,6 +62,8 @@
 
 .logoBox {
   position: relative;
+  /* Explicit: Safari shrinks a grid item with an aspect-ratio to its content */
+  width: 100%;
   aspect-ratio: 1 / 1;
   background: #040404;
   border-radius: 2px;
@@ -95,6 +97,14 @@
 
 /* ── Mobile ─────────────────────────────────────────────────────────────── */
 @media (max-width: 760px) {
+  /* Edge to edge: the browser window (86.46% of the image) spans the screen;
+     the image's transparent margins run past it */
+  .dashboard {
+    width: calc(100vw / .8646);
+    max-width: none;
+    margin: 0 calc(50% - 50vw / .8646);
+  }
+
   .sysGrid,
   .brandGrid {
     grid-template-columns: minmax(0, 1fr);
@@ -105,7 +115,13 @@
     margin: -9% 0 -9%;
   }
 
-  .laptopBox {
-    min-height: 60vw;
+  /* In flow under the logo; the laptop (x 13.5–80.2%, y 13.9–88% of the
+     image) spans the column, so none of it is cut off */
+  .laptop {
+    position: static;
+    width: 150%;
+    height: auto;
+    margin: -12% 0 -6% -20.25%;
+    transform: none;
   }
 }

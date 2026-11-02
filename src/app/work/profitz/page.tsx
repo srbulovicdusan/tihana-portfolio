@@ -46,17 +46,10 @@ export default function ProfitzPage() {
             <Image
               {...img('/images/profitz-dashboard.webp')}
               alt="Profitz main dashboard in a browser window"
-              sizes="(min-width: 1740px) 1600px, 92vw"
+              sizes="(min-width: 1740px) 1600px, (max-width: 760px) 116vw, 92vw"
               preload
               className={styles.dashboard}
             />
-            <figcaption className={`eyebrow ${cs.caption}`}>
-              <span className={cs.captionStrong}>
-                <span className={cs.liveDot} />
-                Main dashboard
-              </span>
-              <span>Net profit at the centre</span>
-            </figcaption>
           </figure>
         </CaseHero>
 

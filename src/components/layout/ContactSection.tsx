@@ -1,4 +1,5 @@
 import { ScrollLink } from '@/components/behavior/ScrollLink';
+import { Arrow } from '@/components/ui/Arrow';
 import { reveal } from '@/lib/reveal';
 import { site } from '@/lib/site';
 import { NameSignature } from './NameSignature';
@@ -41,7 +42,7 @@ export function ContactSection({ withHeader, topHref }: Props) {
       <div {...reveal('fade', 160)} className={styles.emailWrap}>
         <a href={`mailto:${site.email}`} className={styles.email}>
           <span className={styles.emailText}>{site.email}</span>
-          <span aria-hidden="true" className={styles.emailArrow}>↗</span>
+          <Arrow dir="up-right" className={styles.emailArrow} />
           <span className={styles.emailBase} />
           <span className={styles.emailLine} />
         </a>
@@ -50,7 +51,7 @@ export function ContactSection({ withHeader, topHref }: Props) {
       <footer className={styles.footer}>
         <div className={styles.footerBar}>
           <ScrollLink href={topHref} to="top" className={styles.top}>
-            Back to top ↑
+            Back to top <Arrow dir="up" />
           </ScrollLink>
         </div>
         <NameSignature name={site.fullName} />

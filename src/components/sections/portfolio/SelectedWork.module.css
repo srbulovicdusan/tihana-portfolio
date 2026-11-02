@@ -18,7 +18,9 @@
 }
 
 .metaStrong {
+  grid-column: span 2;
   color: #171717;
+  white-space: nowrap;
 }
 
 .metaEnd {

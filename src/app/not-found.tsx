@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteNav } from '@/components/navigation/SiteNav';
+import { Arrow } from '@/components/ui/Arrow';
 import { routes } from '@/lib/site';
 import styles from './not-found.module.css';
 
@@ -23,7 +24,7 @@ export default function NotFound() {
             </span>
           </h1>
           <Link href={routes.work} className={styles.back}>
-            ← Back to work
+            <Arrow dir="left" /> Back to work
           </Link>
         </section>
       </main>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { CSSProperties, ReactNode } from 'react';
+import { Arrow } from '@/components/ui/Arrow';
 import { reveal } from '@/lib/reveal';
 import { routes } from '@/lib/site';
 import styles from './case-study.module.css';
@@ -29,7 +30,7 @@ type Props = {
   tagline: [string, string];
   intro: string;
   facts: Fact[];
-  /** Small print under the facts (which then keep four columns at every width) */
+  /** Small print under the facts (which then keep four columns, two on mobile) */
   note?: string;
   /** The hero figure */
   children: ReactNode;
@@ -57,7 +58,8 @@ export function CaseHero({ titleId, tags, caseNumber, title, titleSize, titleNow
     <section id="top" className={styles.top} aria-labelledby={titleId}>
       <div className={styles.heroInner}>
         <Link href={routes.work} className={styles.back}>
-          <span aria-hidden="true">←</span>Back to work
+          <Arrow dir="left" />
+          Back to work
         </Link>
         <div className={`eyebrow ${styles.heroMeta}`}>
           <span className={styles.strong}>{tags}</span>

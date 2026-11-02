@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { Arrow } from '@/components/ui/Arrow';
 import { pad2, PROJECTS } from '@/lib/projects';
 import styles from './WorkRouteDialog.module.css';
 
@@ -43,7 +44,7 @@ export function WorkRouteDialog() {
       <div className={`eyebrow ${styles.head}`}>
         <span>Case study {pad2(index + 1)} / 05</span>
         <a href="#work" className={styles.back}>
-          ← Back to work
+          <Arrow dir="left" /> Back to work
         </a>
       </div>
       <div className={styles.body}>

@@ -11,7 +11,6 @@ export function SelectedWork() {
     <section id="work" className={styles.section} aria-labelledby="work-title">
       <div className={`eyebrow ${styles.meta}`}>
         <span className={styles.metaStrong}>(03) Selected Work</span>
-        <span>2024 — 2026</span>
         <span />
         <span className={styles.metaEnd}>05 Projects</span>
       </div>

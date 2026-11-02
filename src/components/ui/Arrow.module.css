@@ -1,0 +1,6 @@
+/* Centred on the x-height when inline with text */
+.arrow {
+  display: inline-block;
+  flex: none;
+  vertical-align: -.125em;
+}

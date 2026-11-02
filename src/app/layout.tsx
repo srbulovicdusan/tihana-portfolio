@@ -6,7 +6,8 @@ import './globals.css';
 
 // Inter Tight latin subset (variable wght), exactly as served in the design
 // exports. The unicode-range mirrors Google Fonts' latin subset so glyphs
-// outside it (←, →, ↗) fall back to the same system fonts as the originals;
+// outside it fall back to the same system fonts as the originals (arrows are
+// SVG icons, components/ui/Arrow.tsx: iOS would draw them as emoji);
 // for the same reason no metric-adjusted fallback face is generated.
 const interTight = localFont({
   src: [

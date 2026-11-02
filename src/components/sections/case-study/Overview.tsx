@@ -10,7 +10,7 @@ type Props = {
   approach: string;
   /** "Key questions", "Key goals" */
   listLabel: string;
-  /** Four items sit in four columns (two on mobile), three in three (one on mobile) */
+  /** Four items sit in four columns, three in three; one column on mobile */
   items: string[];
 };
 

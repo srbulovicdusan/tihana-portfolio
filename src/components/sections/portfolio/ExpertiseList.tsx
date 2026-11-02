@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useRef, useState } from 'react';
+import { Arrow } from '@/components/ui/Arrow';
 import { pad2 } from '@/lib/projects';
 import { reveal } from '@/lib/reveal';
 import { useMediaQuery } from '@/lib/use-media-query';
@@ -127,7 +128,7 @@ export function ExpertiseList() {
                 <span className={styles.rowNum}>({pad2(i + 1)})</span>
                 <span className={styles.rowLabel}>
                   {label}
-                  <span aria-hidden="true" className={styles.rowArrow}>→</span>
+                  <Arrow dir="right" className={styles.rowArrow} />
                 </span>
               </a>
               {mobile && open === i && video && (

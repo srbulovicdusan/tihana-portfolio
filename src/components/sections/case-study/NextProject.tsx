@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Arrow } from '@/components/ui/Arrow';
 import { img, type ImageSrc } from '@/lib/images';
 import { reveal } from '@/lib/reveal';
 import { routes } from '@/lib/site';
@@ -52,10 +53,12 @@ export function NextProject({ href, caseNumber, name, category, media }: Props) 
   return (
     <section id="next" className={styles.next} aria-label="Next project">
       <div className={`eyebrow ${styles.metaRow}`}>
-        <span className={styles.strong}>Next project →</span>
         <Link href={routes.work} className={styles.backSmall}>
-          ← Back to work
+          <Arrow dir="left" /> Back to work
         </Link>
+        <span className={styles.strong}>
+          Next project <Arrow dir="right" />
+        </span>
       </div>
       <div {...reveal('rule')} className={styles.rule} />
       <Link href={href} className={styles.nextLink}>
@@ -66,7 +69,7 @@ export function NextProject({ href, caseNumber, name, category, media }: Props) 
           <span className={`eyebrow ${styles.label}`}>{`Case Study (${caseNumber})`}</span>
           <h2 className={styles.nextTitle}>
             <span>{name}</span>
-            <span aria-hidden="true" className={styles.nextArrow}>→</span>
+            <Arrow dir="right" className={styles.nextArrow} />
             <span className={styles.nextBase} />
             <span className={styles.nextLine} />
           </h2>

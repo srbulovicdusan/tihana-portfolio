@@ -134,11 +134,12 @@
 
 /* ── Compact ────────────────────────────────────────────────────────────── */
 @media (max-width: 760px) {
+  /* The portrait starts at the top, under the (blended) nav */
   .hero {
     height: auto;
     min-height: 0;
     overflow: visible;
-    padding: 64px 0 56px;
+    padding: 0 0 56px;
   }
 
   .portraitBox {
@@ -160,12 +161,14 @@
     mask-composite: intersect;
   }
 
+  /* Raised onto the portrait's faded bottom; positioned to paint above it */
   .text {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 36px;
     padding: 0 6%;
-    margin-top: 8px;
+    margin-top: -16%;
   }
 
   .title {

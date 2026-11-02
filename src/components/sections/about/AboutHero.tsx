@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ScrollLink } from '@/components/behavior/ScrollLink';
+import { Arrow } from '@/components/ui/Arrow';
 import { img } from '@/lib/images';
 import { reveal } from '@/lib/reveal';
 import styles from './AboutHero.module.css';
@@ -58,7 +59,7 @@ export function AboutHero() {
           <div className={styles.bar}>
             <span>Based in Serbia, working worldwide</span>
             <ScrollLink href="#experience" to="experience" className={styles.expLink}>
-              Experience ↓
+              Experience <Arrow dir="down" />
             </ScrollLink>
           </div>
         </div>

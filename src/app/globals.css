@@ -44,25 +44,20 @@ a:hover {
 }
 
 .page[data-theme='light'] {
-  background: #f0eee9;
-  color: #171717;
-}
-
-/* No Days Wasted and Sekundarac: grey page on the same light theme */
-.page[data-theme='light'][data-surface='grey'] {
   background: #e8e8e8;
+  color: #171717;
 }
 
 /* Light pages (case study) */
 html:has(main[data-theme='light']),
 html:has(main[data-theme='light']) body {
-  background: #f0eee9;
+  background: #e8e8e8;
   color: #171717;
 }
 
 html:has(main[data-theme='light']) ::selection {
   background: #171717;
-  color: #f0eee9;
+  color: #e8e8e8;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -73,11 +68,12 @@ html:has(main[data-theme='light']) ::selection {
 
 /* ── Display-heading lines ───────────────────────────────────────────────
    Each line of a large heading is its own block. The padding/negative margin
-   pair gives italic overhangs and descenders room inside overflow:hidden. */
+   pair gives italic overhangs and descenders room inside overflow:hidden
+   (g descends .216em; at line-height .84 the line box keeps only .056em). */
 .hl {
   display: block;
-  padding: 0 .14em .08em 0;
-  margin: 0 -.14em -.08em 0;
+  padding: 0 .14em .2em 0;
+  margin: 0 -.14em -.2em 0;
 }
 
 .hl-clip {
@@ -140,8 +136,9 @@ html:has(main[data-theme='light']) ::selection {
     transform: translateY(24px);
   }
 
+  /* Far enough to clear the .hl descender room below the line */
   .js [data-reveal='line']:not([data-revealed]) {
-    transform: translateY(110%);
+    transform: translateY(130%);
   }
 
   .js [data-reveal='rule'] {

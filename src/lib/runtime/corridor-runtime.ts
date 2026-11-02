@@ -35,6 +35,7 @@ export function corridorRuntime(stage: HTMLElement): { destroy(): void } {
     OVERLAP_FROM: 0.3, // fraction of the path before overlap starts to build
     EMERGE: 0.55, // the next card grows from this fraction of the centre card, hidden behind it
     MAX_H: 0.5, // foreground card height cap, fraction of hero height
+    MOB_ZOOM: 1.4, // phones: larger cards, the outer ones run past the screen edges
     ENTRY_DUR: 2400,
     ENTRY_DELAY: 300,
     START_TILT: 1.7,
@@ -104,7 +105,7 @@ export function corridorRuntime(stage: HTMLElement): { destroy(): void } {
       const q0 = m < 0 ? 0.82 * (0.55 + 0.45 * smooth(-1, 0, m)) : 0.82 + (0.46 - 0.82) * smooth(0, FG, m);
       E0 += q0 * s0 * cosT * DT;
     }
-    let W = (vw / 2 - vw * (mob ? 0.035 : 0.045)) / E0;
+    let W = ((vw / 2 - vw * (mob ? 0.035 : 0.045)) / E0) * (mob ? L0.MOB_ZOOM : 1);
     let H = W / L0.AR;
     if (H > vh * L0.MAX_H) {
       H = vh * L0.MAX_H;

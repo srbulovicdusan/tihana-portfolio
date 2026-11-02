@@ -47,6 +47,18 @@
   letter-spacing: -.05em;
 }
 
+/* SplitHeading's accent line: on narrow screens the indent gives way before
+   the accent would run past the edge */
+.accentLine {
+  display: flex;
+}
+
+.accentIndent {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
 .body {
   margin: 0;
   font-size: clamp(17px, 1.3vw, 19px);
@@ -170,7 +182,7 @@
   margin: 0;
 }
 
-/* Facts followed by a note: a fixed four-column list, at every width */
+/* Facts followed by a note: a fixed four-column list (two on mobile) */
 .factsCol {
   grid-column: 3 / -1;
   display: flex;
@@ -653,11 +665,17 @@
   }
 
   .qList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Facts with a note: two by two, like the others */
+  .factsCol .facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .qList3 {
-    grid-template-columns: minmax(0, 1fr);
+  /* Each text belongs to the image above it: keep the next image well clear */
+  .featList {
+    gap: 96px;
   }
 
   .featMedia,

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Arrow } from '@/components/ui/Arrow';
 import { routes } from '@/lib/site';
 import { HeroScene } from './HeroScene';
 import styles from './Hero.module.css';
@@ -27,7 +28,9 @@ export function Hero() {
         <div className={`${styles.ui} ${styles.tr}`}>
           <nav className={styles.nav} aria-label="Primary">
             <a href="#work">Work</a>
-            <Link href={routes.about}>About ↗</Link>
+            <Link href={routes.about}>
+              About <Arrow dir="up-right" />
+            </Link>
           </nav>
         </div>
 
@@ -39,13 +42,13 @@ export function Hero() {
 
         <div className={`${styles.ui} ${styles.mr}`}>
           <a className={styles.cta} href="#contact">
-            Start a project <span>→</span>
+            Start a project <Arrow dir="right" />
           </a>
         </div>
 
         <div className={`${styles.info} ${styles.ui}`}>
           <a className={styles.explore} href="#work">
-            Explore selected projects <span aria-hidden="true">↓</span>
+            Explore selected projects <Arrow dir="down" className={styles.exploreArrow} />
           </a>
         </div>
 

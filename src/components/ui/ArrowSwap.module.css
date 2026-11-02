@@ -13,7 +13,9 @@
 .b {
   position: absolute;
   inset: 0;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform .6s var(--ease-io);
 }
 

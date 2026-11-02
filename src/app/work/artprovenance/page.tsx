@@ -28,7 +28,7 @@ export default function ArtProvenancePage() {
       <main className="page" data-theme="light" data-reveal-threshold="0.08">
         <CaseHero
           titleId="artprovenance-title"
-          tags="AI Platform · UI/UX · Art Market"
+          tags="AI Platform · UI/UX"
           caseNumber="01"
           title="Art Provenance"
           titleSize="clamp(48px, 10.4vw, 184px)"

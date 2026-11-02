@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test.describe('portfolio navigation', () => {
   test('hero links reach About and the case study, and back/forward work', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'About ↗' }).click();
+    await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about$/);
     await expect(page.locator('h1')).toContainText('about');
 
@@ -45,7 +45,7 @@ test.describe('portfolio navigation', () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole('heading')).toHaveText('Email Design');
     await expect(dialog).toContainText('Case study 05 / 05');
-    await dialog.getByRole('link', { name: '← Back to work' }).click();
+    await dialog.getByRole('link', { name: 'Back to work' }).click();
     await expect(dialog).toBeHidden();
     await expect(page).toHaveURL(/#work$/);
   });
@@ -94,9 +94,9 @@ test.describe('site navigation from inner pages', () => {
     await expect(page).toHaveURL(/\/#work$/);
 
     await page.goto('/work/profitz');
-    await nav.getByRole('link', { name: 'About ↗' }).click();
+    await nav.getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about$/);
-    await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'About ↗' })).toHaveAttribute('aria-current', 'page');
+    await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page');
 
     await nav.getByRole('link', { name: /Tihana/ }).click();
     await expect(page).toHaveURL(/\/$/);
@@ -132,7 +132,7 @@ test.describe('site navigation from inner pages', () => {
 
   test('back to top returns to the top without changing the URL', async ({ page }) => {
     await page.goto('/about');
-    await page.getByRole('link', { name: 'Back to top ↑' }).click();
+    await page.getByRole('link', { name: 'Back to top' }).click();
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page).toHaveURL(/\/about$/);
   });

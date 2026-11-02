@@ -312,6 +312,7 @@
   color: #f4f2ee;
   padding: 10px 2px 3px;
   border-bottom: 1px solid rgba(244, 242, 238, .32);
+  white-space: nowrap;
   transition: border-color .4s, opacity .4s;
 }
 
@@ -319,12 +320,11 @@
   border-color: #f4f2ee;
 }
 
-.explore span {
-  display: inline-block;
+.exploreArrow {
   transition: transform .5s var(--ease-expo);
 }
 
-.explore:hover span {
+.explore:hover .exploreArrow {
   transform: translateY(3px);
 }
 
@@ -353,17 +353,30 @@
 @container hero (max-width: 760px) {
   .glow,
   .stage {
-    --cy: 40%;
+    --cy: 34%;
   }
 
+  /* Services: between the intro and "Start a project" */
   .tc {
-    display: none;
+    left: 6%;
+    top: auto;
+    bottom: calc(5% + 46px);
+    transform: none;
+  }
+
+  .services {
+    font-size: clamp(11px, 3.2cqw, 14px);
+    line-height: 1.45;
+  }
+
+  .dv {
+    margin: 0 .5em;
   }
 
   .ml {
     left: 6%;
     right: 6%;
-    bottom: calc(5% + 44px);
+    bottom: calc(5% + 84px);
     max-width: none;
     font-size: 19px;
   }
@@ -384,10 +397,11 @@
     gap: 22px;
   }
 
-  /* Just below the corridor's foreground cards: cy + half a card height + 6% */
+  /* Just below the corridor's foreground cards: cy + half a card height + 6%
+     (half height = 19.884cqw × the runtime's MOB_ZOOM) */
   .info {
     bottom: auto;
-    top: calc(46% + min(19.884cqw, 25cqh));
+    top: calc(40% + min(27.838cqw, 25cqh));
   }
 
   .beam {
