@@ -8,10 +8,13 @@ type Props = {
   heading: { first: string; indent: string; accent: string };
   challenge: string;
   approach: string;
-  /** "Key questions", "Key goals" */
+  /** "Key questions", "Key goals", "Key principles" */
   listLabel: string;
-  /** Four items sit in four columns, three in three; one column on mobile */
-  items: string[];
+  /**
+   * Four items sit in four columns, three in three; one column on mobile.
+   * Items with a description also drop to two columns on tablets.
+   */
+  items: string[] | { title: string; text: string }[];
 };
 
 export function Overview({ heading, challenge, approach, listLabel, items }: Props) {
@@ -33,13 +36,17 @@ export function Overview({ heading, challenge, approach, listLabel, items }: Pro
 
       <div {...reveal('fade')} className={`${styles.stack} ${styles.questions}`}>
         <span className={`eyebrow ${styles.label}`}>{listLabel}</span>
-        <ol className={items.length === 3 ? `${styles.qList} ${styles.qList3}` : styles.qList}>
-          {items.map((q, i) => (
-            <li key={q} className={styles.q}>
-              <span className={styles.qNum}>{pad2(i + 1)}</span>
-              <span className={styles.qText}>{q}</span>
-            </li>
-          ))}
+        <ol className={[styles.qList, items.length === 3 && styles.qList3, typeof items[0] === 'object' && styles.qListNotes].filter(Boolean).join(' ')}>
+          {items.map((q, i) => {
+            const { title, text } = typeof q === 'string' ? { title: q, text: '' } : q;
+            return (
+              <li key={title} className={styles.q}>
+                <span className={styles.qNum}>{pad2(i + 1)}</span>
+                <span className={styles.qText}>{title}</span>
+                {text && <span className={styles.qNote}>{text}</span>}
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>

@@ -25,6 +25,7 @@ test.describe('portfolio navigation', () => {
       ['ArtProvenance', '/work/artprovenance', 'Art Provenance'],
       ['No Days Wasted', '/work/no-days-wasted', 'No Days Wasted'],
       ['Sekundarac', '/work/sekundarac', 'Sekundarac'],
+      ['Email Design', '/work/email-design', 'Email Design'],
     ] as const;
     await page.goto('/');
     for (const [card, path, h1] of cases) {
@@ -35,33 +36,14 @@ test.describe('portfolio navigation', () => {
       await expect(page).toHaveURL(/\/$/);
     }
     await page.goForward();
-    await expect(page).toHaveURL(/\/work\/sekundarac$/);
-  });
-
-  test('the card without a case study opens the placeholder route', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('link', { name: /^Email Design / }).click();
-    const dialog = page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole('heading')).toHaveText('Email Design');
-    await expect(dialog).toContainText('Case study 05 / 05');
-    await dialog.getByRole('link', { name: 'Back to work' }).click();
-    await expect(dialog).toBeHidden();
-    await expect(page).toHaveURL(/#work$/);
+    await expect(page).toHaveURL(/\/work\/email-design$/);
   });
 
   test('placeholder hashes of built case studies redirect to their pages', async ({ page }) => {
-    for (const slug of ['artprovenance', 'no-days-wasted', 'sekundarac']) {
+    for (const slug of ['artprovenance', 'no-days-wasted', 'sekundarac', 'email-design']) {
       await page.goto(`/#work/${slug}`);
       await expect(page).toHaveURL(new RegExp(`/work/${slug}$`));
     }
-  });
-
-  test('Escape closes the placeholder dialog', async ({ page }) => {
-    await page.goto('/#work/email-design');
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('dialog')).toBeHidden();
   });
 
   test('the in-page links point at their sections', async ({ page }) => {
@@ -108,19 +90,20 @@ test.describe('site navigation from inner pages', () => {
       ['Profitz', '/work/profitz'],
       ['No Days Wasted', '/work/no-days-wasted'],
       ['Sekundarac', '/work/sekundarac'],
+      ['Email Design', '/work/email-design'],
     ] as const;
     for (const [name, path] of chain) {
       await page.locator('#next').getByRole('link', { name: new RegExp(name) }).click();
       await expect(page).toHaveURL(new RegExp(`${path}$`));
       await expect(page.locator('h1')).toHaveText(name);
     }
-    // The email case study has no page yet: its placeholder route
-    await page.locator('#next').getByRole('link', { name: /Email Design/ }).click();
-    await expect(page).toHaveURL(/\/#work\/email-design$/);
-    await expect(page.getByRole('dialog')).toContainText('Email Design');
+    // The last case study links back to the one before it
+    await expect(page.locator('#next')).toHaveCount(0);
+    await page.locator('#prev').getByRole('link', { name: /Sekundarac/ }).click();
+    await expect(page).toHaveURL(/\/work\/sekundarac$/);
   });
 
-  for (const path of ['/work/artprovenance', '/work/no-days-wasted', '/work/sekundarac']) {
+  for (const path of ['/work/artprovenance', '/work/no-days-wasted', '/work/sekundarac', '/work/email-design']) {
     test(`${path}: back to work and primary navigation`, async ({ page }) => {
       await page.goto(path);
       await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'page');
@@ -170,5 +153,58 @@ test.describe('touch', () => {
     await expect(page.locator('#expertise video')).toBeVisible();
     await row.tap();
     await expect(page.locator('#expertise video')).toHaveCount(0);
+  });
+});
+
+test.describe('email design gallery', () => {
+  test('a card opens its full email; previous/next wrap around, also with the arrow keys', async ({ page }) => {
+    await page.goto('/work/email-design');
+    const cards = page.locator('#emails').getByRole('button');
+    await expect(cards).toHaveCount(8);
+    await cards.first().click();
+
+    const dialog = page.getByRole('dialog', { name: 'BetterBone email' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('01 / 08');
+    await expect(dialog.getByRole('img', { name: 'Full BetterBone email' })).toBeVisible();
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).toBe('hidden');
+
+    await dialog.getByRole('button', { name: 'Previous email' }).click();
+    await expect(page.getByRole('dialog', { name: 'Gantri email' })).toContainText('08 / 08');
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    await expect(page.getByRole('dialog', { name: 'The Ace VIP email' })).toContainText('02 / 08');
+  });
+
+  test('Escape, the close button and a click beside the email close it, returning focus to the card', async ({ page, isMobile }) => {
+    await page.goto('/work/email-design');
+    const card = page.locator('#emails').getByRole('button', { name: 'View full Pawse email' });
+
+    await card.click();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(card).toBeFocused();
+    expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+
+    await card.click();
+    await page.getByRole('button', { name: 'Close' }).click();
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+
+    // On mobile the email spans the screen, with nothing beside it
+    if (isMobile) return;
+    await card.click();
+    await page.getByRole('dialog').locator('[tabindex="0"]').click({ position: { x: 4, y: 4 } });
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+
+  test('Tab stays inside the open viewer', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'keyboard only');
+    await page.goto('/work/email-design');
+    await page.locator('#emails').getByRole('button').first().click();
+    const dialog = page.getByRole('dialog');
+    for (let i = 0; i < 5; i++) {
+      await page.keyboard.press('Tab');
+      expect(await dialog.evaluate(d => d.contains(document.activeElement))).toBe(true);
+    }
   });
 });

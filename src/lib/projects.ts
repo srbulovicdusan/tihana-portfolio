@@ -64,10 +64,12 @@ export const PROJECTS: Project[] = [
     slug: 'email-design',
     name: 'Email Design',
     category: 'Email & Digital Design',
-    visual: 'placeholder',
+    visual: 'img',
+    image: '/images/email-design-card.webp',
     position: '50% 50%',
     tone: '#dcdcdc',
-    size: '1200 × 1440',
+    size: '2000 × 1600',
+    href: routes.emailDesign,
   },
 ];
 

@@ -27,11 +27,14 @@ type Props = {
    */
   titleSize?: string;
   titleNowrap?: boolean;
-  tagline: [string, string];
+  /** One or two lines; the last never wraps */
+  tagline: [string] | [string, string];
   intro: string;
   facts: Fact[];
   /** Small print under the facts (which then keep four columns, two on mobile) */
   note?: string;
+  /** Four columns (two on mobile) without a note, instead of as many as fit */
+  factsFour?: boolean;
   /** The hero figure */
   children: ReactNode;
 };
@@ -42,9 +45,9 @@ function ddClass(f: Fact) {
   return f.tabular ? styles.tabular : undefined;
 }
 
-export function CaseHero({ titleId, tags, caseNumber, title, titleSize, titleNowrap, tagline, intro, facts, note, children }: Props) {
+export function CaseHero({ titleId, tags, caseNumber, title, titleSize, titleNowrap, tagline, intro, facts, note, factsFour, children }: Props) {
   const list = (
-    <dl className={styles.facts}>
+    <dl className={factsFour ? `${styles.facts} ${styles.factsFour}` : styles.facts}>
       {facts.map((f, i) => (
         <div key={f.term} {...reveal('fade', i * 60)} className={f.wide ? `${styles.fact} ${styles.factWide}` : styles.fact}>
           <dt className="eyebrow">{f.term}</dt>
@@ -77,8 +80,11 @@ export function CaseHero({ titleId, tags, caseNumber, title, titleSize, titleNow
             </span>
           </h1>
           <p {...reveal('fade', 120)} className={styles.tagline}>
-            <span className="blk">{tagline[0]}</span>
-            <span className="blk nowrap">{tagline[1]}</span>
+            {tagline.map((line, i) => (
+              <span key={line} className={i === tagline.length - 1 ? 'blk nowrap' : 'blk'}>
+                {line}
+              </span>
+            ))}
           </p>
         </div>
 

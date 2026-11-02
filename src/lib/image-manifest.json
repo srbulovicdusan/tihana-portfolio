@@ -104,6 +104,220 @@
       2560
     ]
   },
+  "/images/email-design-card.webp": {
+    "width": 2000,
+    "height": 1600,
+    "base": "/images/w/email-design-card.4ab3f545",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2000
+    ]
+  },
+  "/images/email-design-hero.webp": {
+    "width": 2400,
+    "height": 1350,
+    "base": "/images/w/email-design-hero.5268e4fe",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1280,
+      1600,
+      1920,
+      2400
+    ]
+  },
+  "/images/email-design/alloura.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/alloura.top.e10c79f7",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/alloura.webp": {
+    "width": 1200,
+    "height": 6956,
+    "base": "/images/w/email-design/alloura.876c5e4c",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/betterbone.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/betterbone.top.975c9269",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/betterbone.webp": {
+    "width": 1200,
+    "height": 5896,
+    "base": "/images/w/email-design/betterbone.0c0c918e",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/chowmore.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/chowmore.top.a301b9b8",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/chowmore.webp": {
+    "width": 1200,
+    "height": 5826,
+    "base": "/images/w/email-design/chowmore.8dcd00db",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/gantri.top.webp": {
+    "width": 600,
+    "height": 800,
+    "base": "/images/w/email-design/gantri.top.beaab2fb",
+    "widths": [
+      384,
+      600
+    ]
+  },
+  "/images/email-design/gantri.webp": {
+    "width": 600,
+    "height": 2866,
+    "base": "/images/w/email-design/gantri.99ef4cc8",
+    "widths": [
+      384,
+      600
+    ]
+  },
+  "/images/email-design/highland-soap.top.webp": {
+    "width": 900,
+    "height": 1200,
+    "base": "/images/w/email-design/highland-soap.top.407ea9a8",
+    "widths": [
+      384,
+      640,
+      828,
+      900
+    ]
+  },
+  "/images/email-design/highland-soap.webp": {
+    "width": 900,
+    "height": 5550,
+    "base": "/images/w/email-design/highland-soap.55d3eb3e",
+    "widths": [
+      384,
+      640,
+      828,
+      900
+    ]
+  },
+  "/images/email-design/panda-drum.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/panda-drum.top.fe2136f0",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/panda-drum.webp": {
+    "width": 1200,
+    "height": 7281,
+    "base": "/images/w/email-design/panda-drum.9654eab6",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/pawse.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/pawse.top.4ceaf59f",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/pawse.webp": {
+    "width": 1200,
+    "height": 5204,
+    "base": "/images/w/email-design/pawse.82e8b5eb",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/the-ace-vip.top.webp": {
+    "width": 1200,
+    "height": 1600,
+    "base": "/images/w/email-design/the-ace-vip.top.ec058f9d",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
+  "/images/email-design/the-ace-vip.webp": {
+    "width": 1200,
+    "height": 9998,
+    "base": "/images/w/email-design/the-ace-vip.4643cac4",
+    "widths": [
+      384,
+      640,
+      828,
+      1080,
+      1200
+    ]
+  },
   "/images/hero/artprovenance.webp": {
     "width": 1200,
     "height": 1600,

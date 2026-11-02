@@ -10,5 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}${routes.profitz}`, lastModified, changeFrequency: 'yearly', priority: 0.8 },
     { url: `${siteUrl}${routes.noDaysWasted}`, lastModified, changeFrequency: 'yearly', priority: 0.8 },
     { url: `${siteUrl}${routes.sekundarac}`, lastModified, changeFrequency: 'yearly', priority: 0.8 },
+    { url: `${siteUrl}${routes.emailDesign}`, lastModified, changeFrequency: 'yearly', priority: 0.8 },
   ];
 }

@@ -7,6 +7,7 @@ const PAGES = [
   { path: '/work/profitz', title: 'Profitz — Case study — Tihana', h1: /^Profitz$/ },
   { path: '/work/no-days-wasted', title: 'No Days Wasted — Case study — Tihana', h1: /^No Days Wasted$/ },
   { path: '/work/sekundarac', title: 'Sekundarac — Case study — Tihana', h1: /^Sekundarac$/ },
+  { path: '/work/email-design', title: 'Email Design — Case study — Tihana', h1: /^Email Design$/ },
 ];
 
 for (const p of PAGES) {
@@ -45,6 +46,7 @@ test('preferred alias URLs redirect to the case studies', async ({ request }) =>
     ['/work/art-provenance', '/work/artprovenance'],
     ['/projects/no-days-wasted', '/work/no-days-wasted'],
     ['/projects/sekundarac', '/work/sekundarac'],
+    ['/projects/email-design', '/work/email-design'],
   ] as const;
   for (const [alias, target] of aliases) {
     const res = await request.get(alias, { maxRedirects: 0 });

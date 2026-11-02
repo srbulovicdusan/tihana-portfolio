@@ -1,6 +1,7 @@
-/* Case-study template shared by Art Provenance, Profitz, No Days Wasted and
-   Sekundarac. Page-only sections keep their own modules; nothing here is
-   overridden from another file, so rule order across modules never matters. */
+/* Case-study template shared by Art Provenance, Profitz, No Days Wasted,
+   Sekundarac and Email Design. Page-only sections keep their own modules;
+   nothing here is overridden from another file, so rule order across modules
+   never matters. */
 
 /* ── Shared ─────────────────────────────────────────────────────────────── */
 .section {
@@ -22,6 +23,12 @@
 
 .strong {
   color: #171717;
+}
+
+/* A section label that is also the section's heading: styled as the label */
+.labelHeading {
+  margin: 0;
+  font: inherit;
 }
 
 .rule {
@@ -194,6 +201,13 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+/* Four columns without a note (Email Design): at its own height, not stretched
+   to the intro's */
+.factsFour {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-self: start;
+}
+
 .factsNote {
   margin: 0;
   font-size: 12px;
@@ -337,6 +351,20 @@
   letter-spacing: -.02em;
   line-height: 1.25;
   text-wrap: balance;
+}
+
+.qNote {
+  margin-top: -6px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #76736e;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1100px) {
+  .qListNotes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* ── 03 Key features (dark) ─────────────────────────────────────────────── */
@@ -572,14 +600,6 @@
   height: 102%;
 }
 
-.nextPlaceholder {
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  color: #777;
-  background: #dcdcdc;
-}
-
 .nextText {
   grid-column: 3 / -1;
   display: flex;
@@ -635,6 +655,11 @@
   transform: translateX(8px);
 }
 
+.nextLink:hover .prevArrow,
+.nextLink:focus-visible .prevArrow {
+  transform: translateX(-8px);
+}
+
 .nextLink:hover .nextLine,
 .nextLink:focus-visible .nextLine {
   transform: scaleX(1);
@@ -669,7 +694,8 @@
   }
 
   /* Facts with a note: two by two, like the others */
-  .factsCol .facts {
+  .factsCol .facts,
+  .factsFour {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

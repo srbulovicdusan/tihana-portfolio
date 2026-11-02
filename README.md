@@ -1,6 +1,6 @@
 # Tihana — Portfolio
 
-Next.js rebuild of six design exports (kept in the repo root as the visual source of truth):
+Next.js rebuild of seven design exports (kept in the repo root, Email Design in `new-page/`, as the visual source of truth):
 
 | Export | Route | Aliases (308) |
 | --- | --- | --- |
@@ -10,8 +10,9 @@ Next.js rebuild of six design exports (kept in the repo root as the visual sourc
 | `Profitz Case Study.html` | `/work/profitz` | `/projects/profits`, `/projects/profitz` |
 | `No Days Wasted.html` | `/work/no-days-wasted` | `/projects/no-days-wasted` |
 | `Sekundarac.html` | `/work/sekundarac` | `/projects/sekundarac` |
+| `new-page/Email Design.html` | `/work/email-design` | `/projects/email-design` |
 
-Case-study URLs follow the export's own scheme, `/work/<slug>` with the portfolio card's slug. The one card without a page (Email Design) opens an in-page placeholder at `#work/email-design`; the placeholder hash of a built case study redirects to its page. Each case study's "Next project" link leads to the next one: Art Provenance → Profitz → No Days Wasted → Sekundarac → the Email Design placeholder.
+Case-study URLs follow the export's own scheme, `/work/<slug>` with the portfolio card's slug. All five cards have a page; the exports' in-page placeholder hashes (`#work/<slug>`) redirect to it. Each case study's "Next project" link leads to the next one: Art Provenance → Profitz → No Days Wasted → Sekundarac → Email Design, whose "Previous project" link goes back to Sekundarac.
 
 ## Stack
 
@@ -42,8 +43,8 @@ npm run dev                  # http://localhost:3000
 src/app/                     routes, metadata, sitemap/robots, 404, OG images, fonts
 src/components/navigation/   SiteNav (fixed, mix-blend-mode: difference)
 src/components/layout/       ContactSection + NameSignature (shared footer)
-src/components/sections/     case-study/ (template shared by the four case studies) and
-                             per-page sections (portfolio/, about/, artprovenance/, profitz/, sekundarac/)
+src/components/sections/     case-study/ (template shared by the five case studies) and per-page sections
+                             (portfolio/, about/, artprovenance/, profitz/, sekundarac/, email-design/)
 src/components/behavior/     small client helpers: ScrollLink, HoverGroup, AutoplayVideo
 src/lib/runtime/             inline-script runtimes (reveals, hero corridor)
 scripts/                     asset extraction and image optimisation
@@ -51,13 +52,13 @@ tests/e2e/                   routing, navigation, metadata, accessibility
 visual-comparison/           screenshots and diffs against the exports (git-ignored, see its README)
 ```
 
-- **Server Components by default.** Client code is limited to the hero scene, the Expertise list (hover preview, mobile tap-to-play), the `#work/<slug>` placeholder dialog, the portfolio scroll effects, two small link/hover helpers, and the case-study video player (`AutoplayVideo`, under 1 KB, loaded only by No Days Wasted and Sekundarac). The app's own client JS is about 6 KB gzipped on the homepage; the rest is the React/Next runtime.
-- **Case-study template.** The four case studies share one section system (`case-study/`: hero, overview, dark key features, heading-with-aside, next project) and one stylesheet; each page passes its content as props and adds only its own sections (Profitz's system/brand/outcome, Art Provenance's landing page, Sekundarac's concept and applications). No shared class is overridden from another module, so CSS order across modules never matters.
+- **Server Components by default.** Client code is limited to the hero scene, the Expertise list (hover preview, mobile tap-to-play), the `#work/<slug>` route handler (redirects to the case study; its placeholder dialog only shows for a card without a page), the portfolio scroll effects, two small link/hover helpers, the case-study video player (`AutoplayVideo`, under 1 KB, loaded only by No Days Wasted, Sekundarac and Email Design) and the Email Design viewer (`EmailLightbox`, about 3 KB gzipped, loaded only there). The app's own client JS is about 6 KB gzipped on the homepage; the rest is the React/Next runtime.
+- **Case-study template.** The five case studies share one section system (`case-study/`: hero, overview, dark key features, heading-with-aside, next/previous project) and one stylesheet; each page passes its content as props and adds only its own sections (Profitz's system/brand/outcome, Art Provenance's landing page, Sekundarac's concept and applications, Email Design's selected-emails gallery and viewer). No shared class is overridden from another module, so CSS order across modules never matters.
 - **Inline runtimes.** Scroll reveals (`reveal-runtime.ts`) and the hero corridor (`corridor-runtime.ts`) run as inline scripts serialised with `Function.prototype.toString`, so above-the-fold motion starts during HTML parsing instead of after hydration (this is what keeps mobile LCP under 2.5 s). They must stay self-contained: no imports and no outer references.
 - **Layout logic in CSS.** The exports switched layouts with `matchMedia` → React state; here those are media queries, so the server HTML is already correct at every width. Breakpoints: `760px` (mobile, or `hover: none` where the export did so), `1099/1100px`, `1199px`.
 - **Hero.** The export embedded the hero as an iframe. It is inlined as a CSS size container, with `vw/vh` → `cqw/cqh` and media → container queries, so its geometry still follows the hero box.
 - **Fonts.** Inter Tight is self-hosted from the exports (latin subset, variable weight) via `next/font/local`. It keeps the original `unicode-range` and has no metric-adjusted fallback, because ←, → and ↗ must fall back to the same system fonts as in the exports.
-- **Images.** Originals are extracted byte-for-byte to `public/images/` (not referenced at runtime). `scripts/optimize-images.mjs` writes content-hashed WebP variants (from PNG, WebP or JPEG) to `public/images/w/`, served through a custom `next/image` loader (`src/lib/image-loader.ts`) with long-lived immutable caching. There is no runtime image optimiser. Sources tagged with a non-sRGB colour profile (display-profile screenshots, Adobe RGB) keep it in their variants, so they are colour-managed like the originals; cwebp would otherwise drop it and shift the colours (the Sekundarac green rendered `#0D5A30` instead of `#146533`).
+- **Images.** Originals are extracted byte-for-byte to `public/images/` (not referenced at runtime). `scripts/optimize-images.mjs` writes content-hashed WebP variants (from PNG, WebP or JPEG) to `public/images/w/`, served through a custom `next/image` loader (`src/lib/image-loader.ts`) with long-lived immutable caching. There is no runtime image optimiser. Sources tagged with a non-sRGB colour profile (display-profile screenshots, Adobe RGB) keep it in their variants, so they are colour-managed like the originals; cwebp would otherwise drop it and shift the colours (the Sekundarac green rendered `#0D5A30` instead of `#146533`). Tall images shown from the top in a fixed-aspect box (the Email Design gallery) also get variants of just that top crop (`<name>.top.webp` in the manifest, `topCrop()` in `src/lib/images.ts`), so a thumbnail doesn't download a whole 10 000 px email. The Email Design portfolio card (`new-page/pocetna_email.webp`) was supplied as a file and is copied as is.
 - **Videos.** Self-hosted MP4s, byte-for-byte from the exports, played muted and looped by `AutoplayVideo`.
 
 ## Deliberate differences from the exports
@@ -67,7 +68,9 @@ visual-comparison/           screenshots and diffs against the exports (git-igno
 3. **Expertise preview videos** load when the section approaches the viewport rather than at page load.
 4. **Case-study videos** (No Days Wasted's animated hero, Sekundarac's logo animation) play while on or near the screen and pause once scrolled away; the No Days Wasted one is only fetched when it approaches the viewport. With `prefers-reduced-motion` they don't play: Sekundarac shows the completed logo (8.4 s), No Days Wasted its first frame.
 5. **Case-study next-project names** are `<h2>` headings (a `<span>` with the same styling in the exports), for a usable heading outline.
-6. **Minifier-proof calc:** the aside paragraph's `calc(clamp(40px, 6.4vw, 104px) * .15 - 5px)` margin is written pre-multiplied (`clamp(6px, .96vw, 15.6px) - 5px`). The CSS minifier rewrote `* .15` as `/ 6.66667`, which came out 1/64 px short and shifted later rules by a device pixel.
+6. **Email Design viewer:** the export's scroll lock never takes effect (its design-tool runtime throws in `componentDidUpdate`); here the page doesn't scroll behind the open viewer, as the code intends. It also gets the modal basics the export lacks: focus moves into it (onto the email, so the keyboard scrolls it), Tab stays inside, and focus returns to the card on close. Section 03's label is its `<h2>` and the brand names are `<h3>`s; gallery thumbnails come from the top crops above, which show exactly the area `object-position: top` shows.
+7. **Sekundarac's next project** follows the supplied mockup (`new-page/sekundarac-next-project.png`): its cover is the Email Design hero (the mockup's cover, full resolution), titled "Email Design", "Email Design · E-commerce · Lifecycle". The label row keeps the site-wide order, "Back to work" left.
+8. **Minifier-proof calc:** the aside paragraph's `calc(clamp(40px, 6.4vw, 104px) * .15 - 5px)` margin is written pre-multiplied (`clamp(6px, .96vw, 15.6px) - 5px`). The CSS minifier rewrote `* .15` as `/ 6.66667`, which came out 1/64 px short and shifted later rules by a device pixel.
 
 ## Known design-level issues (not changed)
 
@@ -84,9 +87,9 @@ visual-comparison/           screenshots and diffs against the exports (git-igno
   | `#76736E` labels on `#E8E8E8` (No Days Wasted, Sekundarac) | 3.85:1 | 4.5:1 | `#6B6864` (4.52:1) |
 
   `#92938F` on the dark sections passes (6.1–6.4:1). axe also flags the fixed nav on light pages; that is a false positive, since it cannot evaluate the nav's `mix-blend-mode: difference`, which renders it near-black there.
-- **Placeholder content** from the design is reproduced as specified: the "Email Design" card ("Insert WebP mockup"), the empty "UI/UX Design" / "Email Design" Expertise previews, the `#work/email-design` "Placeholder route" dialog, and Sekundarac's next-project link, whose cover reads "Insert email project cover" and whose title is literally "[EMAIL PROJECT NAME]". These should be replaced before launch.
-- **Autoplaying looped video without a pause control** (No Days Wasted feature, Sekundarac hero), as designed. WCAG 2.2.2 asks for a pause mechanism for motion over 5 s; adding one is a visible change, so it is left to a design decision. Reduced-motion users get a still frame.
-- **Mobile Lighthouse LCP (~3.1–3.3 s simulated)** on all four case studies: the LCP element is the hero intro paragraph, and Chrome records it only once its 1.1 s reveal fade has finished. Measured with real throttling (4× CPU, 150 ms RTT, 1.6 Mbps) LCP is ~0.7 s. Starting the fade at a non-zero opacity would remove the delay without a visible change, but it changes the global reveal CSS on every page, so it is left as a decision.
+- **Placeholder content** from the design is reproduced as specified: the empty "UI/UX Design" / "Email Design" Expertise previews. These should be replaced before launch.
+- **Autoplaying looped video without a pause control** (No Days Wasted feature, Sekundarac hero, Email Design's previous-project cover), as designed. WCAG 2.2.2 asks for a pause mechanism for motion over 5 s; adding one is a visible change, so it is left to a design decision. Reduced-motion users get a still frame.
+- **Mobile Lighthouse LCP (~3.0–3.3 s simulated)** on all five case studies: the LCP element is the hero intro paragraph, and Chrome records it only once its 1.1 s reveal fade has finished. Measured with real throttling (4× CPU, 150 ms RTT, 1.6 Mbps) LCP is ~0.7 s. Starting the fade at a non-zero opacity would remove the delay without a visible change, but it changes the global reveal CSS on every page, so it is left as a decision.
 
 ## Dependencies and licences
 

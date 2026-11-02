@@ -52,6 +52,7 @@ const nextConfig: NextConfig = {
       { source: '/work/art-provenance', destination: '/work/artprovenance', permanent: true },
       { source: '/projects/no-days-wasted', destination: '/work/no-days-wasted', permanent: true },
       { source: '/projects/sekundarac', destination: '/work/sekundarac', permanent: true },
+      { source: '/projects/email-design', destination: '/work/email-design', permanent: true },
     ];
   },
   async headers() {

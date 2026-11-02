@@ -22,7 +22,13 @@ const EXPORTS = [
   'Art Provenance.html',
   'No Days Wasted.html',
   'Sekundarac.html',
+  'new-page/Email Design.html',
 ];
+
+// Images supplied as files rather than inside an export, copied byte-for-byte.
+const SUPPLIED = {
+  'new-page/pocetna_email.webp': 'public/images/email-design-card.webp', // portfolio card
+};
 
 // SHA-256 prefix → output path. Names follow the asset's role in the design
 // (ext_resources ids, alt text and source comments in the exports).
@@ -78,6 +84,16 @@ const NAMES = {
   '1e829e855cd7': 'public/images/sekundarac-keychains.jpg',
   '8c9a985cf876': 'public/images/sekundarac-pens.jpg',
   '46bafe294e4d': 'public/images/sekundarac-lighters.jpg',
+  // Email Design case study (previous project reuses the wide Sekundarac logo animation)
+  '5268e4fe0d2b': 'public/images/email-design-hero.webp', // also Sekundarac's next-project cover
+  '0c0c918eb172': 'public/images/email-design/betterbone.webp', // em0
+  '4643cac4ef6e': 'public/images/email-design/the-ace-vip.webp', // em1
+  '82e8b5ebec80': 'public/images/email-design/pawse.webp', // em2
+  '55d3eb3eeea3': 'public/images/email-design/highland-soap.webp', // em3
+  '8dcd00dbe5e2': 'public/images/email-design/chowmore.webp', // em4
+  '876c5e4c9282': 'public/images/email-design/alloura.webp', // em5
+  '9654eab62b01': 'public/images/email-design/panda-drum.webp', // em6
+  '99ef4cc81ad5': 'public/images/email-design/gantri.webp', // em7
   // Inter Tight (Google Fonts "latin" subset — the only subset the content uses)
   '83d548cd73ef': 'src/app/fonts/inter-tight-latin.woff2',
   '062ebe734093': 'src/app/fonts/inter-tight-latin-italic.woff2',
@@ -121,6 +137,11 @@ for (const file of EXPORTS) {
     fs.writeFileSync(path.join(root, out), asset.bytes);
     console.log(`${out}  ${asset.bytes.length} B  sha256:${sha.slice(0, 12)}`);
   }
+}
+
+for (const [from, out] of Object.entries(SUPPLIED)) {
+  fs.copyFileSync(path.join(root, from), path.join(root, out));
+  console.log(`${out}  copied from ${from}`);
 }
 
 const written = new Set([...seen.keys()].map(s => s.slice(0, 12)));

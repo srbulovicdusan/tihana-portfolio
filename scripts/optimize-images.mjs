@@ -27,14 +27,20 @@ const manifestPath = path.join(root, 'src/lib/image-manifest.json');
 // Keep in sync with images.deviceSizes / images.imageSizes in next.config.ts
 export const WIDTHS = [384, 640, 828, 1080, 1280, 1600, 1920, 2560];
 
-// Flat-colour logos stay lossless; UI screenshots keep text crisp at q90, and
-// so do JPEG photos, which are already lossy (q85 would compound artefacts).
+// Flat-colour logos stay lossless; UI screenshots and emails keep text crisp at
+// q90, and so do JPEG photos, which are already lossy (q85 would compound artefacts).
 const UI_SCREENS = /^(profitz-|artprovenance-(search|chat|results|record)$|no-days-wasted-(pdp|products)$)/;
 function encoderArgs(name, file) {
   if (/logo/.test(name)) return ['-lossless', '-exact', '-z', '9'];
-  if (UI_SCREENS.test(name) || /\.jpe?g$/i.test(file)) return ['-q', '90', '-alpha_q', '100', '-sharp_yuv', '-m', '6'];
+  if (UI_SCREENS.test(name) || /\/email-design\//.test(file) || /\.jpe?g$/i.test(file)) return ['-q', '90', '-alpha_q', '100', '-sharp_yuv', '-m', '6'];
   return ['-q', '85', '-alpha_q', '100', '-sharp_yuv', '-m', '6'];
 }
+
+// Tall images shown from the top in a fixed-aspect box (object-fit: cover;
+// object-position: 50% 0) also get variants of just that top part, so a
+// thumbnail doesn't download the whole image. Folder → box aspect (width /
+// height); the crop's manifest key is `<name>.top.webp`.
+const TOP_CROPS = { 'email-design/': 3 / 4 };
 
 // Size from the first JPEG start-of-frame marker (SOF0–SOF15, except DHT/JPG/DAC).
 function jpegDimensions(buf) {
@@ -139,22 +145,32 @@ for (const file of listImages(srcDir)) {
   const rel = path.relative(srcDir, file);
   const name = path.basename(rel).replace(/\.\w+$/, '');
   const icc = keepsProfile(buf);
-  // Variants with a kept profile differ from earlier profile-less ones, so the name must too.
-  const hash = createHash('sha256').update(buf).update(icc ? 'icc' : '').digest('hex').slice(0, 8);
-  const base = `/images/w/${rel.replace(/\.\w+$/, '')}.${hash}`;
-  const widths = [...new Set([...WIDTHS.filter(w => w < width), Math.min(width, WIDTHS.at(-1))])];
-  manifest[`/images/${rel}`] = { width, height, base, widths };
-  for (const w of widths) {
-    const out = path.join(root, 'public', `${base}-${w}.webp`);
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-    if (w === width && file.endsWith('.webp')) fs.copyFileSync(file, out);
-    else jobs.push({ file, out, w, name, icc });
+  const stem = rel.replace(/\.\w+$/, '');
+  const entries = [{ key: `/images/${rel}`, stem, height, crop: null }];
+  const aspect = Object.entries(TOP_CROPS).find(([dir]) => rel.startsWith(dir))?.[1];
+  if (aspect && height > width / aspect) {
+    const h = Math.round(width / aspect);
+    entries.push({ key: `/images/${stem}.top.webp`, stem: `${stem}.top`, height: h, crop: ['-crop', '0', '0', String(width), String(h)] });
+  }
+  for (const e of entries) {
+    // Variants with a kept profile differ from earlier profile-less ones, so the name must too.
+    const hash = createHash('sha256').update(buf).update(icc ? 'icc' : '').update(e.crop ? e.crop.join(' ') : '').digest('hex').slice(0, 8);
+    const base = `/images/w/${e.stem}.${hash}`;
+    const widths = [...new Set([...WIDTHS.filter(w => w < width), Math.min(width, WIDTHS.at(-1))])];
+    manifest[e.key] = { width, height: e.height, base, widths };
+    for (const w of widths) {
+      const out = path.join(root, 'public', `${base}-${w}.webp`);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      if (w === width && !e.crop && file.endsWith('.webp')) fs.copyFileSync(file, out);
+      else jobs.push({ file, out, w, name, icc, crop: e.crop });
+    }
   }
 }
 
-await pool(jobs, Math.max(2, os.cpus().length - 1), async ({ file, out, w, name, icc }) => {
+await pool(jobs, Math.max(2, os.cpus().length - 1), async ({ file, out, w, name, icc, crop }) => {
   const metadata = icc ? ['-metadata', 'icc'] : [];
-  await run('cwebp', ['-quiet', ...encoderArgs(name, file), ...metadata, '-resize', String(w), '0', file, '-o', out]);
+  // cwebp crops before it resizes
+  await run('cwebp', ['-quiet', ...encoderArgs(name, file), ...metadata, ...(crop || []), '-resize', String(w), '0', file, '-o', out]);
 });
 
 const sorted = Object.fromEntries(Object.entries(manifest).sort(([a], [b]) => a.localeCompare(b)));

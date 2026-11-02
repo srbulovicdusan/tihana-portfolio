@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.divider {
+  border-top: 1px solid rgba(244, 242, 238, .08);
+}
+
 .head {
   position: relative;
   display: flex;

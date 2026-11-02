@@ -16,4 +16,5 @@ export const routes = {
   profitz: '/work/profitz',
   noDaysWasted: '/work/no-days-wasted',
   sekundarac: '/work/sekundarac',
+  emailDesign: '/work/email-design',
 } as const;

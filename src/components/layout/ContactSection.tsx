@@ -10,11 +10,13 @@ type Props = {
   withHeader?: boolean;
   /** Anchor the "Back to top" link falls back to without JS. */
   topHref: `#${string}`;
+  /** Hairline along the top edge (Email Design) */
+  divider?: boolean;
 };
 
-export function ContactSection({ withHeader, topHref }: Props) {
+export function ContactSection({ withHeader, topHref, divider }: Props) {
   return (
-    <section id="contact" className={styles.contact} aria-labelledby="contact-title">
+    <section id="contact" className={divider ? `${styles.contact} ${styles.divider}` : styles.contact} aria-labelledby="contact-title">
       {withHeader && (
         <>
           <div className={`eyebrow ${styles.head}`}>

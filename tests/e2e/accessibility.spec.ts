@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 // They are logged below and listed in README.md for a design decision.
 const DESIGN_EXCEPTIONS = ['color-contrast'];
 
-const PATHS = ['/', '/about', '/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac', '/#work/email-design'];
+const PATHS = ['/', '/about', '/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac', '/work/email-design'];
 
 for (const path of PATHS) {
   test(`axe: ${path}`, async ({ page }, testInfo) => {
@@ -43,7 +43,7 @@ test('hidden sticky nav is not keyboard-reachable on the hero', async ({ page, i
   expect(await page.locator(':focus').evaluate(el => !!el.closest('[inert]'))).toBe(false);
 });
 
-for (const path of ['/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac']) {
+for (const path of ['/work/artprovenance', '/work/profitz', '/work/no-days-wasted', '/work/sekundarac', '/work/email-design']) {
   test(`reduced motion shows all content without animation: ${path}`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(path);
@@ -67,4 +67,14 @@ test('looping videos load near the viewport and play muted', async ({ page }) =>
   expect(await video.evaluate((v: HTMLVideoElement) => v.readyState)).toBe(0);
   await video.scrollIntoViewIfNeeded();
   await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused && v.muted)).toBe(true);
+});
+
+test('axe: email viewer open', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/work/email-design');
+  await page.locator('#emails').getByRole('button').first().click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  const results = await new AxeBuilder({ page }).include('[role="dialog"]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice']).analyze();
+  const blocking = results.violations.filter(v => !DESIGN_EXCEPTIONS.includes(v.id));
+  expect(blocking.map(v => `${v.id}: ${v.nodes.map(n => n.target.join(' ')).join(', ')}`)).toEqual([]);
 });

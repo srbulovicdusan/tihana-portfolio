@@ -1,0 +1,246 @@
+/* ── 03 Selected emails ─────────────────────────────────────────────────── */
+.emails {
+  position: relative;
+  padding: 0 4% clamp(80px, 9vw, 144px);
+}
+
+.gallery {
+  margin: clamp(36px, 4.4vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(32px, 3.4vw, 56px) clamp(16px, 2vw, 32px);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* The top of the email in a 3:4 card; lifts and offers the full email on hover */
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  cursor: zoom-in;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #e4e1db;
+  font: inherit;
+  color: inherit;
+  transform: translateY(0px);
+  transition: transform .6s var(--ease-out);
+  outline-offset: 6px;
+}
+
+.thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+.pill {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  margin-left: -74px;
+  width: 148px;
+  display: flex;
+  justify-content: center;
+  padding: 9px 0;
+  border-radius: 999px;
+  background: #171717;
+  font-size: 13px;
+  color: #f0eee9;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity .4s ease,
+    transform .6s var(--ease-out);
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-6px);
+}
+
+.card:hover .pill,
+.card:focus-visible .pill {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+
+.num {
+  font-size: 12px;
+  color: #76736e;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Full-email viewer ──────────────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: rgba(6, 6, 6, .97);
+  color: #f0efeb;
+}
+
+.bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 4%;
+  border-bottom: 1px solid rgba(244, 242, 238, .1);
+}
+
+.barLabel {
+  color: rgba(244, 242, 238, .55);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.count {
+  margin-right: 8px;
+  font-size: 12px;
+  color: rgba(244, 242, 238, .55);
+  font-variant-numeric: tabular-nums;
+}
+
+.step,
+.close {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  font: inherit;
+  cursor: pointer;
+}
+
+.step {
+  background: none;
+  border: 1px solid rgba(244, 242, 238, .16);
+  color: inherit;
+  font-size: 16px;
+  transition: border-color .3s;
+}
+
+.step:hover {
+  border-color: #f0efeb;
+}
+
+.close {
+  margin-left: 8px;
+  background: #f0efeb;
+  color: #090909;
+  border: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.scroller {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(24px, 4vw, 56px) 4%;
+}
+
+/* Keyboard focus only (it takes focus when the viewer opens); drawn inside the
+   edge-to-edge area */
+.scroller:focus-visible {
+  outline: 2px solid rgba(240, 239, 235, .6);
+  outline-offset: -2px;
+}
+
+.head {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 0 24px;
+}
+
+.headBrand {
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+
+.desc {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(244, 242, 238, .8);
+  text-wrap: pretty;
+}
+
+.full {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #151514;
+}
+
+.fullImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1100px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .scroller {
+    padding: 0;
+  }
+
+  .head {
+    padding: 24px 20px 20px;
+  }
+}

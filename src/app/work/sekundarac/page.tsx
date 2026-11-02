@@ -62,13 +62,12 @@ export default function SekundaracPage() {
         <Concept />
         <Applications />
 
-        {/* The email case study has no page yet: its cover and name are the design's placeholders. */}
         <NextProject
-          href="/#work/email-design"
+          href={routes.emailDesign}
           caseNumber="05"
-          name="[EMAIL PROJECT NAME]"
-          category="Email Design"
-          media={{ placeholder: 'Insert email project cover' }}
+          name="Email Design"
+          category="Email Design · E-commerce · Lifecycle"
+          media={{ image: '/images/email-design-hero.webp', alt: 'BetterBone and Pawse emails shown on four phone mockups' }}
         />
         <ContactSection topHref="#top" />
       </main>
